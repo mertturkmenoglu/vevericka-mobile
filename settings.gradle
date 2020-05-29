@@ -1,0 +1,2 @@
+rootProject.name='Vevericka'
+include ':app'
