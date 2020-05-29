@@ -3,4 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="sign_up_text">Don\'t have an account? Sign up</string>
+    <string name="app_logo_description">App logo</string>
+    <string name="login_help">Login Help</string>
 </resources>

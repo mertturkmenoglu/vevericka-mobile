@@ -1,4 +1,4 @@
-package io.github.mertturkmenoglu.vevericka.ui.home
+package io.github.mertturkmenoglu.vevericka.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

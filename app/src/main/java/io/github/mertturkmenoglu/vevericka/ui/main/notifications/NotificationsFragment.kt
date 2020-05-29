@@ -1,4 +1,4 @@
-package io.github.mertturkmenoglu.vevericka.ui.notifications
+package io.github.mertturkmenoglu.vevericka.ui.main.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

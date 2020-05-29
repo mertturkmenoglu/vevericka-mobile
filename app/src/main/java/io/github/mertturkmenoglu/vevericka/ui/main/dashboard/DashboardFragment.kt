@@ -1,4 +1,4 @@
-package io.github.mertturkmenoglu.vevericka.ui.dashboard
+package io.github.mertturkmenoglu.vevericka.ui.main.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
