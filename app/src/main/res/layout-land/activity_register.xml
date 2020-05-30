@@ -14,6 +14,13 @@
         app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_mid_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_end_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,13 +34,21 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
     <ImageView
         android:id="@+id/registerProfileImage"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:contentDescription="@string/register_profile_picture"
         android:src="@drawable/ic_baseline_add_circle_outline_black_24dp"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_end_guideline"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_end_guideline"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_mid_guideline"
         app:layout_constraintStart_toStartOf="@id/vertical_guideline"
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline" />
 
@@ -44,8 +59,8 @@
         android:layout_marginTop="32dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
-        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/registerProfileImage">
+        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -63,7 +78,7 @@
         android:layout_marginTop="32dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
-        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
         app:layout_constraintTop_toBottomOf="@id/registerEmailTextInput"
         app:passwordToggleEnabled="true">
 
@@ -80,13 +95,13 @@
         android:id="@+id/registerRegisterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
         android:layout_marginTop="16dp"
-        app:backgroundTint="@color/colorAppRed"
         android:text="@string/register"
-        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:backgroundTint="@color/colorAppRed"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
+        app:layout_constraintStart_toStartOf="@+id/vertical_mid_guideline"
         app:layout_constraintTop_toBottomOf="@id/registerPasswordTextInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,4 +16,8 @@
     <string name="send_password_reset_link">Send Password Reset Link</string>
     <string name="password_reset_sent_ok_msg">Password reset link sent</string>
     <string name="generic_err_msg">Failed</string>
+    <string name="register_profile_picture">Register profile picture</string>
+    <string name="register">Register</string>
+    <string name="select_profile_picture">Select Profile Picture</string>
+    <string name="user_create_ok_msg">User created</string>
 </resources>
