@@ -36,7 +36,6 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         registerRegisterButton.setOnClickListener {
-            Snackbar.make(it, isPictureSelected.toString(), Snackbar.LENGTH_SHORT).show()
             registerClick(it)
         }
     }

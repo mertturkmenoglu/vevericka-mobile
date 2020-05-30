@@ -20,4 +20,5 @@
     <string name="register">Register</string>
     <string name="select_profile_picture">Select Profile Picture</string>
     <string name="user_create_ok_msg">User created</string>
+    <string name="login_err_msg">Cannot login</string>
 </resources>

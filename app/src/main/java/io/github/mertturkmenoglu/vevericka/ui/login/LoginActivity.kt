@@ -18,10 +18,6 @@ private const val TAG = "LoginActivity"
 class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        if (FirebaseAuthHelper.isLoggedIn) {
-//            startActivity(intentFor<MainActivity>().newTask().clearTask())
-//        }
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
@@ -38,7 +34,8 @@ class LoginActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener {
                     Log.e(TAG, "onCreate: ", it)
-                    Snackbar.make(view, "Cannot login", Snackbar.LENGTH_SHORT).show()
+                    val message = it.message ?: getString(R.string.login_err_msg)
+                    Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
                 }
         }
 
