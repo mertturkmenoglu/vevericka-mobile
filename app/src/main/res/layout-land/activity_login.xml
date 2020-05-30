@@ -111,7 +111,7 @@
 
     <Button
         android:id="@+id/loginLoginButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/login"
@@ -126,11 +126,12 @@
         android:id="@+id/loginHelp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/login_help"
         android:src="@drawable/ic_outline_help_outline_red_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/loginLoginButton"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_end_guideline"
+        app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
         app:layout_constraintStart_toStartOf="@+id/vertical_mid_guideline"
-        app:layout_constraintTop_toTopOf="@id/loginLoginButton"
-        app:layout_constraintVertical_bias="0.416" />
+        app:layout_constraintTop_toBottomOf="@id/loginLoginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

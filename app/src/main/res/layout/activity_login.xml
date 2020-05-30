@@ -98,7 +98,7 @@
 
     <Button
         android:id="@+id/loginLoginButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@android:color/white"
@@ -114,9 +114,10 @@
         android:contentDescription="@string/login_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:src="@drawable/ic_outline_help_outline_red_24dp"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
-        app:layout_constraintTop_toTopOf="@id/loginLoginButton"
-        app:layout_constraintBottom_toBottomOf="@id/loginLoginButton" />
-
+        app:layout_constraintTop_toBottomOf="@id/loginLoginButton"
+        app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
