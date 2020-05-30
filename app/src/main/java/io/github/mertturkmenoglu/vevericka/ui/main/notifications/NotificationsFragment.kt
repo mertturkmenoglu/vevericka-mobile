@@ -9,6 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import io.github.mertturkmenoglu.vevericka.R
+import io.github.mertturkmenoglu.vevericka.ui.login.LoginActivity
+import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
+import kotlinx.android.synthetic.main.fragment_notifications.view.*
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.newTask
+import org.jetbrains.anko.support.v4.intentFor
 
 class NotificationsFragment : Fragment() {
 
@@ -26,6 +32,12 @@ class NotificationsFragment : Fragment() {
         notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        root.tempSignOutButton.setOnClickListener {
+            FirebaseAuthHelper.instance.signOut()
+            startActivity(intentFor<LoginActivity>().clearTask().newTask())
+        }
+
         return root
     }
 }
