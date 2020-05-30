@@ -10,4 +10,10 @@
     <string name="sign_up_text">Don\'t have an account? Sign up</string>
     <string name="app_logo_description">App logo</string>
     <string name="login_help">Login Help</string>
+    <string name="send_verification_email">Send verification email</string>
+    <string name="help">Help</string>
+    <string name="send">Send</string>
+    <string name="send_password_reset_link">Send Password Reset Link</string>
+    <string name="password_reset_sent_ok_msg">Password reset link sent</string>
+    <string name="generic_err_msg">Failed</string>
 </resources>
