@@ -28,6 +28,11 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
 
+            if (email.isBlank() || password.isBlank()) {
+                Snackbar.make(view, "Empty field", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             FirebaseAuthHelper.instance.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     startActivity(intentFor<MainActivity>().newTask().clearTask())
