@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,10 +52,10 @@
         android:minWidth="32dp"
         android:minHeight="32dp"
         android:scaleType="center"
-        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_end_guideline"
         app:layout_constraintEnd_toStartOf="@id/vertical_mid_guideline"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline"
         app:srcCompat="@drawable/ic_squirrel" />
 
     <TextView
@@ -78,16 +77,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:errorEnabled="true"
-        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
+        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
         app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
             android:fontFamily="@font/montserrat"
-            android:hint="@string/email" />
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -96,17 +95,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:errorEnabled="true"
-        app:passwordToggleEnabled="true"
-        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
-        app:layout_constraintTop_toBottomOf="@id/loginEmailTextInput">
+        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
+        app:layout_constraintTop_toBottomOf="@id/loginEmailTextInput"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:inputType="textPassword"
-            android:hint="@string/password" />
+            android:hint="@string/password"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -123,15 +122,30 @@
         app:layout_constraintTop_toBottomOf="@id/loginPasswordTextInput" />
 
     <ImageView
-        android:id="@+id/loginHelp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/loginHelpButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:contentDescription="@string/login_help"
         android:src="@drawable/ic_outline_help_outline_red_24dp"
         app:layout_constraintBottom_toTopOf="@+id/horizontal_end_guideline"
-        app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
+        app:layout_constraintEnd_toStartOf="@id/loginHelpText"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@+id/vertical_mid_guideline"
         app:layout_constraintTop_toBottomOf="@id/loginLoginButton" />
+
+    <TextView
+        android:id="@+id/loginHelpText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/login_help_text"
+        android:textColor="@color/colorAppRed"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/loginHelpButton"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_end_guideline"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/loginHelpButton"
+        app:layout_constraintTop_toTopOf="@id/loginHelpButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,17 +44,25 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
 
-        loginHelp.setOnClickListener {
-            val selections = listOf(
-                getString(R.string.forget_password),
-                getString(R.string.sign_up_text)
-            )
+        loginHelpButton.setOnClickListener {
+            helpDialog(it)
+        }
 
-            selector(getString(R.string.help), selections) { _, i ->
-                when (i) {
-                    0 -> passwordReset(it)
-                    1 -> startActivity(intentFor<RegisterActivity>())
-                }
+        loginHelpText.setOnClickListener {
+            helpDialog(it)
+        }
+    }
+
+    private fun helpDialog(view: View) {
+        val selections = listOf(
+            getString(R.string.forget_password),
+            getString(R.string.sign_up_text)
+        )
+
+        selector(getString(R.string.help), selections) { _, i ->
+            when (i) {
+                0 -> passwordReset(view)
+                1 -> startActivity(intentFor<RegisterActivity>())
             }
         }
     }
