@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import io.github.mertturkmenoglu.vevericka.R
@@ -14,19 +15,23 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.*
 
 private const val TAG = "LoginActivity"
+private const val KEY_EMAIL = "email"
+private const val KEY_PASSWORD = "password"
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var mEmailEditText: EditText
+    private lateinit var mPasswordEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        loginLoginButton.setOnClickListener { view ->
-            val emailEditText = loginEmailTextInput.editText ?: throw NoSuchElementException()
-            val passwordEditText = loginPasswordTextInput.editText ?: throw NoSuchElementException()
+        mEmailEditText = loginEmailTextInput.editText ?: throw IllegalStateException()
+        mPasswordEditText = loginPasswordTextInput.editText ?: throw IllegalStateException()
 
-            val email = emailEditText.text.toString().trim()
-            val password = passwordEditText.text.toString().trim()
+        loginLoginButton.setOnClickListener { view ->
+            val email = mEmailEditText.text?.toString()?.trim() ?: return@setOnClickListener
+            val password = mPasswordEditText.text?.toString()?.trim() ?: return@setOnClickListener
 
             if (email.isBlank() || password.isBlank()) {
                 Snackbar.make(view, "Empty field", Snackbar.LENGTH_SHORT).show()
@@ -91,11 +96,27 @@ class LoginActivity : AppCompatActivity() {
                         }
                         .addOnFailureListener { e ->
                             Log.e(TAG, "passwordReset: ", e)
-                            Snackbar.make(view,
-                                getString(R.string.generic_err_msg), Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(
+                                view,
+                                getString(R.string.generic_err_msg), Snackbar.LENGTH_SHORT
+                            ).show()
                         }
                 }
             }
         }.show()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString(KEY_EMAIL, mEmailEditText.text?.toString())
+        outState.putString(KEY_PASSWORD, mPasswordEditText.text?.toString())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        mEmailEditText.setText(savedInstanceState.getString(KEY_EMAIL, ""))
+        mPasswordEditText.setText(savedInstanceState.getString(KEY_PASSWORD, ""))
     }
 }
