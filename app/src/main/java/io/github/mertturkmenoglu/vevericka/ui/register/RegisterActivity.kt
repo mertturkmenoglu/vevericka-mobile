@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -15,6 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.ui.main.MainActivity
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
+import io.github.mertturkmenoglu.vevericka.util.FirestoreHelper
+import io.github.mertturkmenoglu.vevericka.util.StorageHelper
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
@@ -38,6 +42,8 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        registerProgressBar.visibility = GONE
+
         mEmailEditText = registerEmailTextInput.editText ?: throw IllegalStateException()
         mPasswordEditText = registerPasswordTextInput.editText ?: throw IllegalStateException()
 
@@ -60,28 +66,75 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        val userTask = FirebaseAuthHelper.instance.createUserWithEmailAndPassword(email, password)
+        registerProgressBar.visibility = VISIBLE
+        registerRegisterButton.isClickable = false
 
-        userTask.addOnSuccessListener {
-            val okMessage = getString(R.string.user_create_ok_msg)
-            Snackbar.make(view, okMessage, Snackbar.LENGTH_SHORT).show()
+        FirebaseAuthHelper.createUser(email, password)
+            .addOnSuccessListener { onCreateUserSuccess(view, email, password) }
+            .addOnFailureListener { onCreateUserFail(view, it) }
+    }
 
-            FirebaseAuthHelper.instance.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    // TODO: Add DB and Storage operations
-                    startActivity(intentFor<MainActivity>().clearTask().newTask())
-                }
-                .addOnFailureListener {
-                    Log.e(TAG, "registerClick: ", it)
-                    val message = it.localizedMessage ?: getString(R.string.generic_err_msg)
-                    Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
-                }
+    private fun onCreateUserSuccess(view: View, email: String, password: String) {
+        val okMessage = getString(R.string.user_create_ok_msg)
+        Snackbar.make(view, okMessage, Snackbar.LENGTH_SHORT).show()
+
+        val signInTask = FirebaseAuthHelper.signIn(email, password)
+
+        signInTask.addOnSuccessListener {
+            val uid = it.user?.uid ?: System.currentTimeMillis().toString()
+            onSignInSuccess(email, uid)
         }
 
-        userTask.addOnFailureListener {
+        signInTask.addOnFailureListener {
             Log.e(TAG, "registerClick: ", it)
+
+            registerProgressBar.visibility = GONE
+            registerRegisterButton.isClickable = true
             val message = it.localizedMessage ?: getString(R.string.generic_err_msg)
+
             Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun onCreateUserFail(view: View, e: Exception) {
+        Log.e(TAG, "registerClick: ", e)
+
+        registerProgressBar.visibility = GONE
+        registerRegisterButton.isClickable = true
+        val message = e.localizedMessage ?: getString(R.string.generic_err_msg)
+
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun onSignInSuccess(email: String, uid: String) {
+        FirestoreHelper.saveUser(email)
+            .addOnSuccessListener {
+                onDatabaseSaveSuccess(uid)
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "User save failed: ", it)
+
+                registerProgressBar.visibility = GONE
+                registerRegisterButton.isClickable = true
+            }
+    }
+
+    private fun onDatabaseSaveSuccess(uid: String) {
+        if (!this::imageBytes.isInitialized) {
+            startActivity(intentFor<MainActivity>().clearTask().newTask())
+            return
+        }
+
+        val uploadTask = StorageHelper.uploadImageByteArray(uid, imageBytes)
+
+        uploadTask.addOnSuccessListener {
+            startActivity(intentFor<MainActivity>().clearTask().newTask())
+        }
+
+        uploadTask.addOnFailureListener {
+            Log.e(TAG, "Image upload failed: ", it)
+            registerProgressBar.visibility = GONE
+            registerRegisterButton.isClickable = true
         }
     }
 
@@ -133,11 +186,8 @@ class RegisterActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        val email = savedInstanceState.getString(KEY_EMAIL, "")
-        val password = savedInstanceState.getString(KEY_PASSWORD, "")
-
-        mEmailEditText.setText(email)
-        mPasswordEditText.setText(password)
+        mEmailEditText.setText(savedInstanceState.getString(KEY_EMAIL, ""))
+        mPasswordEditText.setText(savedInstanceState.getString(KEY_PASSWORD, ""))
 
         imageBytes = savedInstanceState.getByteArray(KEY_IMAGE) ?: return
 
