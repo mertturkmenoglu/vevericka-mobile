@@ -12,14 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="io.github.mertturkmenoglu.vevericka.ui.main.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_messages"
+        android:name="io.github.mertturkmenoglu.vevericka.ui.main.messages.MessagesFragment"
+        android:label="@string/title_messages"
+        tools:layout="@layout/fragment_messages" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="io.github.mertturkmenoglu.vevericka.ui.main.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/navigation_friends"
+        android:name="io.github.mertturkmenoglu.vevericka.ui.main.friends.FriendsFragment"
+        android:label="@string/title_friends"
+        tools:layout="@layout/fragment_friends" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="io.github.mertturkmenoglu.vevericka.ui.main.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
