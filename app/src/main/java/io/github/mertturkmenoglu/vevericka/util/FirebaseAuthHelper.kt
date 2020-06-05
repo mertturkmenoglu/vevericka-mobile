@@ -16,4 +16,10 @@ object FirebaseAuthHelper {
     fun signIn(email: String, password: String): Task<AuthResult> {
         return instance.signInWithEmailAndPassword(email, password)
     }
+
+    fun sendVerificationEmail(): Task<Void> {
+        return instance.currentUser?.sendEmailVerification() ?: throw IllegalStateException()
+    }
+
+    fun isUserVerified() = FirebaseAuth.getInstance().currentUser?.isEmailVerified ?: false
 }

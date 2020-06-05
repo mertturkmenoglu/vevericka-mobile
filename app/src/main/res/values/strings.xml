@@ -28,4 +28,11 @@
     <string name="send_password_reset_email">Send email</string>
     <string name="title_profile">Profile</string>
     <string name="title_friends">Friends</string>
+    <string name="verification_info_text">Before you use the application, you have to verify your email address. Please click the button below to send a verification email</string>
+    <string name="verification_check">Check</string>
+    <string name="verification_check_text">If you verified your email, click the button below</string>
+    <string name="user_not_verified_msg">User is not verified</string>
+    <string name="verification_email_send_ok_msg">Verification email sent</string>
+    <string name="verification_email_send_err_msg">Verification email send failed</string>
+    <string name="user_verified_ok_msg">User is verified</string>
 </resources>
