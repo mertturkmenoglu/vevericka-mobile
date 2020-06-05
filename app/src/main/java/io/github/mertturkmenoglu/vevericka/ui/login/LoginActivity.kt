@@ -1,24 +1,28 @@
 package io.github.mertturkmenoglu.vevericka.ui.login
 
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.ui.main.MainActivity
+import io.github.mertturkmenoglu.vevericka.ui.password.PasswordResetActivity
 import io.github.mertturkmenoglu.vevericka.ui.register.RegisterActivity
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.*
-
-private const val TAG = "LoginActivity"
-private const val KEY_EMAIL = "email"
-private const val KEY_PASSWORD = "password"
+import org.jetbrains.anko.clearTask
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
+import org.jetbrains.anko.selector
 
 class LoginActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "LoginActivity"
+        private const val KEY_EMAIL = "email"
+        private const val KEY_PASSWORD = "password"
+    }
+
     private lateinit var mEmailEditText: EditText
     private lateinit var mPasswordEditText: EditText
 
@@ -49,16 +53,11 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
 
-        loginHelpButton.setOnClickListener {
-            helpDialog(it)
-        }
-
-        loginHelpText.setOnClickListener {
-            helpDialog(it)
-        }
+        loginHelpButton.setOnClickListener { helpDialog() }
+        loginHelpText.setOnClickListener { helpDialog() }
     }
 
-    private fun helpDialog(view: View) {
+    private fun helpDialog() {
         val selections = listOf(
             getString(R.string.forget_password),
             getString(R.string.sign_up_text)
@@ -66,44 +65,10 @@ class LoginActivity : AppCompatActivity() {
 
         selector(getString(R.string.help), selections) { _, i ->
             when (i) {
-                0 -> passwordReset(view)
+                0 -> startActivity(intentFor<PasswordResetActivity>())
                 1 -> startActivity(intentFor<RegisterActivity>())
             }
         }
-    }
-
-    private fun passwordReset(view: View) {
-        alert {
-            title = getString(R.string.send_password_reset_link)
-
-            customView {
-                val input = editText {
-                    hint = getString(R.string.email)
-                    singleLine = true
-                    inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                }
-
-                positiveButton(getString(R.string.send)) {
-                    val email = input.text?.toString()?.trim() ?: throw NoSuchElementException()
-
-                    FirebaseAuthHelper.instance.sendPasswordResetEmail(email)
-                        .addOnSuccessListener {
-                            Snackbar.make(
-                                view,
-                                getString(R.string.password_reset_sent_ok_msg),
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e(TAG, "passwordReset: ", e)
-                            Snackbar.make(
-                                view,
-                                getString(R.string.generic_err_msg), Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                }
-            }
-        }.show()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

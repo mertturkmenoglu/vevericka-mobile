@@ -24,4 +24,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="login_help_text">Need Help?</string>
     <string name="fill_empty_fields">Fill empty fields</string>
+    <string name="password_reset_info_text">Enter your email address. We will send you a link.</string>
+    <string name="send_password_reset_email">Send email</string>
 </resources>
