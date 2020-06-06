@@ -6,8 +6,13 @@ object Constants {
     }
 
     object UserFields {
-        const val email = "email"
-        const val firstName = "firstName"
-        const val lastName = "lastName"
+        const val EMAIL = "email"
+        const val FIRST_NAME = "firstName"
+        const val LAST_NAME = "lastName"
+    }
+
+    object ProfileVisibility {
+        const val PUBLIC = "public"
+        const val PRIVATE = "private"
     }
 }

@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -14,7 +13,6 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.snackbar.Snackbar
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.data.User
 import io.github.mertturkmenoglu.vevericka.ui.main.MainActivity
@@ -22,15 +20,13 @@ import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import io.github.mertturkmenoglu.vevericka.util.FirestoreHelper
 import io.github.mertturkmenoglu.vevericka.util.StorageHelper
 import kotlinx.android.synthetic.main.activity_register.*
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
+import org.jetbrains.anko.*
+import org.jetbrains.anko.design.snackbar
 import java.io.ByteArrayOutputStream
 
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), AnkoLogger {
     companion object {
-        private const val TAG = "RegisterActivity"
         private const val RC_SELECT_IMAGE = 1
         private const val KEY_FIRST_NAME = "first_name"
         private const val KEY_LAST_NAME = "last_name"
@@ -51,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        registerProgressBar.visibility = GONE
+        resetViews()
 
         mFirstNameEditText = registerFirstNameTextInput.editText ?: throw IllegalStateException()
         mLastNameEditText = registerLastNameTextInput.editText ?: throw IllegalStateException()
@@ -72,6 +68,11 @@ class RegisterActivity : AppCompatActivity() {
         registerRegisterButton.isClickable = true
     }
 
+    private fun prepareViews() {
+        registerProgressBar.visibility = VISIBLE
+        registerRegisterButton.isClickable = false
+    }
+
     private fun registerClick(view: View) {
         val firstName = mFirstNameEditText.text?.toString()?.trim() ?: return
         val lastName = mLastNameEditText.text?.toString()?.trim() ?: return
@@ -79,15 +80,13 @@ class RegisterActivity : AppCompatActivity() {
         val password = mPasswordEditText.text?.toString()?.trim() ?: return
 
         if (listOf(firstName, lastName, email, password).any { it.isBlank() }) {
-            val text = getString(R.string.fill_empty_fields)
-            Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show()
+            view.snackbar(getString(R.string.fill_empty_fields))
             return
         }
 
         val user = User(firstName, lastName, email)
 
-        registerProgressBar.visibility = VISIBLE
-        registerRegisterButton.isClickable = false
+        prepareViews()
 
         FirebaseAuthHelper.createUser(email, password)
             .addOnSuccessListener { onCreateUserSuccess(view, user, password) }
@@ -95,54 +94,54 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun onCreateUserSuccess(view: View, user: User, password: String) {
-        val okMessage = getString(R.string.user_create_ok_msg)
-        Snackbar.make(view, okMessage, Snackbar.LENGTH_SHORT).show()
+        view.snackbar(getString(R.string.user_create_ok_msg))
+        signIn(view, user, password)
+    }
 
+    private fun signIn(view: View, user: User, password: String) {
         FirebaseAuthHelper.signIn(user.email, password).addOnCompleteListener {
             if (it.isSuccessful) {
                 val uid = it.result?.user?.uid ?: System.currentTimeMillis().toString()
                 onSignInSuccess(user, uid)
             } else {
-                Log.e(TAG, "registerClick: ", it.exception)
+                error { "SignIn failed: " + it.exception }
                 resetViews()
-
-                val message = it.exception?.localizedMessage ?: getString(R.string.generic_err_msg)
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+                view.snackbar(it.exception?.localizedMessage ?: getString(R.string.generic_err_msg))
             }
         }
     }
 
     private fun onCreateUserFail(view: View, e: Exception) {
-        Log.e(TAG, "registerClick: ", e)
+        error { "UserCreate failed: $e" }
         resetViews()
-
-        val message = e.localizedMessage ?: getString(R.string.generic_err_msg)
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+        view.snackbar(e.localizedMessage ?: getString(R.string.generic_err_msg))
     }
 
     private fun onSignInSuccess(user: User, uid: String) {
         FirestoreHelper.saveUser(user).addOnCompleteListener {
             if (!it.isSuccessful) {
-                Log.e(TAG, "User save failed: ", it.exception)
+                error { "UserSave failed: " + it.exception }
                 resetViews()
-                return@addOnCompleteListener
+            } else {
+                onDatabaseSaveSuccess(uid)
             }
-
-            onDatabaseSaveSuccess(uid)
         }
     }
 
     private fun onDatabaseSaveSuccess(uid: String) {
         if (!this::imageBytes.isInitialized) {
             startActivity(intentFor<MainActivity>().clearTask().newTask())
-            return
+        } else {
+            uploadImage(uid)
         }
+    }
 
+    private fun uploadImage(uid: String) {
         StorageHelper.uploadImageByteArray(uid, imageBytes).addOnCompleteListener {
             if (it.isSuccessful) {
                 startActivity(intentFor<MainActivity>().clearTask().newTask())
             } else {
-                Log.e(TAG, "Image upload failed: ", it.exception)
+                error { "ImageUpload failed: " + it.exception }
                 resetViews()
             }
         }
