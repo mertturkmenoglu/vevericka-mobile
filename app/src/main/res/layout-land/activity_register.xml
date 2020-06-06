@@ -52,58 +52,100 @@
         app:layout_constraintStart_toStartOf="@id/vertical_guideline"
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerEmailTextInput"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
-        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="@id/vertical_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/vertical_mid_guideline"
         app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress" />
+            android:orientation="vertical">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registerFirstNameTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:errorEnabled="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/registerPasswordTextInput"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
-        app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
-        app:layout_constraintTop_toBottomOf="@id/registerEmailTextInput"
-        app:passwordToggleEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/register_first_name"
+                    android:inputType="textEmailAddress" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registerLastNameTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:errorEnabled="true">
 
-    <Button
-        android:id="@+id/registerRegisterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/register"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:backgroundTint="@color/colorAppRed"
-        app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
-        app:layout_constraintStart_toStartOf="@+id/vertical_mid_guideline"
-        app:layout_constraintTop_toBottomOf="@id/registerPasswordTextInput" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/register_last_name"
+                    android:inputType="textEmailAddress" />
 
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registerEmailTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/registerPasswordTextInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:errorEnabled="true"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/registerRegisterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:backgroundTint="@color/colorAppRed"
+                app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
+                app:layout_constraintStart_toStartOf="@+id/vertical_mid_guideline"
+                app:layout_constraintTop_toBottomOf="@id/registerPasswordTextInput" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/registerProgressBar"
@@ -116,6 +158,6 @@
         app:layout_constraintBottom_toTopOf="@+id/horizontal_end_guideline"
         app:layout_constraintEnd_toStartOf="@+id/vertical_end_guideline"
         app:layout_constraintStart_toStartOf="@+id/vertical_mid_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/registerRegisterButton" />
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_guideline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
