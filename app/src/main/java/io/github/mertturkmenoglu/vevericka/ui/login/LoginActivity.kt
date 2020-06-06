@@ -1,24 +1,20 @@
 package io.github.mertturkmenoglu.vevericka.ui.login
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.ui.main.MainActivity
 import io.github.mertturkmenoglu.vevericka.ui.password.PasswordResetActivity
 import io.github.mertturkmenoglu.vevericka.ui.register.RegisterActivity
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
-import org.jetbrains.anko.selector
+import org.jetbrains.anko.*
+import org.jetbrains.anko.design.snackbar
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), AnkoLogger {
     companion object {
-        private const val TAG = "LoginActivity"
         private const val KEY_EMAIL = "email"
         private const val KEY_PASSWORD = "password"
     }
@@ -33,29 +29,34 @@ class LoginActivity : AppCompatActivity() {
         mEmailEditText = loginEmailTextInput.editText ?: throw IllegalStateException()
         mPasswordEditText = loginPasswordTextInput.editText ?: throw IllegalStateException()
 
-        loginLoginButton.setOnClickListener { view ->
-            val email = mEmailEditText.text?.toString()?.trim() ?: return@setOnClickListener
-            val password = mPasswordEditText.text?.toString()?.trim() ?: return@setOnClickListener
-
-            if (email.isBlank() || password.isBlank()) {
-                Snackbar.make(view, getString(R.string.login_empty_field), Snackbar.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            }
-
-            FirebaseAuthHelper.instance.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    startActivity(intentFor<MainActivity>().newTask().clearTask())
-                }
-                .addOnFailureListener {
-                    Log.e(TAG, "onCreate: ", it)
-                    val message = it.message ?: getString(R.string.login_err_msg)
-                    Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
-                }
-        }
-
+        loginLoginButton.setOnClickListener { onLoginClick(it) }
         loginHelpButton.setOnClickListener { helpDialog() }
         loginHelpText.setOnClickListener { helpDialog() }
+    }
+
+    private fun onLoginClick(view: View) {
+        val email = mEmailEditText.text?.toString()?.trim() ?: return
+        val password = mPasswordEditText.text?.toString()?.trim() ?: return
+
+        if (listOf(email, password).any { it.isBlank() }) {
+            val text = getString(R.string.login_empty_field)
+            view.snackbar(text)
+            return
+        }
+
+        signIn(view, email, password)
+    }
+
+    private fun signIn(view: View, email: String, password: String) {
+        FirebaseAuthHelper.signIn(email, password).addOnCompleteListener {
+            if (it.isSuccessful) {
+                startActivity(intentFor<MainActivity>().newTask().clearTask())
+            } else {
+                val message = it.exception?.localizedMessage ?: getString(R.string.login_err_msg)
+                error("Sign-in failure: ", it.exception)
+                view.snackbar(message)
+            }
+        }
     }
 
     private fun helpDialog() {
