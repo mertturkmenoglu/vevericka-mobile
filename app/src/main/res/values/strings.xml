@@ -35,4 +35,6 @@
     <string name="verification_email_send_ok_msg">Verification email sent</string>
     <string name="verification_email_send_err_msg">Verification email send failed</string>
     <string name="user_verified_ok_msg">User is verified</string>
+    <string name="register_first_name">First Name</string>
+    <string name="register_last_name">Last Name</string>
 </resources>

@@ -7,5 +7,7 @@ object Constants {
 
     object UserFields {
         const val email = "email"
+        const val firstName = "firstName"
+        const val lastName = "lastName"
     }
 }
