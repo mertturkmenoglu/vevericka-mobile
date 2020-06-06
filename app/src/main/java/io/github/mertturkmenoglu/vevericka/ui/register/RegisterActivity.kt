@@ -139,11 +139,18 @@ class RegisterActivity : AppCompatActivity(), AnkoLogger {
     private fun uploadImage(uid: String) {
         StorageHelper.uploadImageByteArray(uid, imageBytes).addOnCompleteListener {
             if (it.isSuccessful) {
-                startActivity(intentFor<MainActivity>().clearTask().newTask())
+                updateImageUrl(uid)
             } else {
                 error { "ImageUpload failed: " + it.exception }
                 resetViews()
             }
+        }
+    }
+
+    private fun updateImageUrl(uid: String) {
+        verbose("Image Url updating")
+        FirestoreHelper.updateImageUrl(uid, uid).addOnSuccessListener {
+            startActivity(intentFor<MainActivity>().clearTask().newTask())
         }
     }
 

@@ -9,6 +9,7 @@ object Constants {
         const val EMAIL = "email"
         const val FIRST_NAME = "firstName"
         const val LAST_NAME = "lastName"
+        const val IMAGE_URL = "imageUrl"
     }
 
     object ProfileVisibility {
