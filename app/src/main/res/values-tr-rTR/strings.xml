@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_home">Ana Sayfa</string>
+    <string name="title_messages">Mesajlar</string>
+    <string name="title_notifications">Bildirimler</string>
+    <string name="email">E-Posta</string>
+    <string name="password">Şifre</string>
+    <string name="login">Giriş Yap</string>
+    <string name="forget_password">Şifrenizi mi unuttunuz?</string>
+    <string name="sign_up_text">Hesabınız yok mu? Kaydolun</string>
+    <string name="app_logo_description">Uygulama logosu</string>
+    <string name="login_help">Giriş Yardımı</string>
+    <string name="send_verification_email">Doğrulama e-postası gönder</string>
+    <string name="help">Yardım</string>
+    <string name="send">Gönder</string>
+    <string name="send_password_reset_link">Şifre Sıfırlama Linki Gönder</string>
+    <string name="password_reset_sent_ok_msg">Şifre sıfırlama linki gönderildi</string>
+    <string name="generic_err_msg">Başarısız</string>
+    <string name="register_profile_picture">Kayıt ekranı profil fotoğrafı</string>
+    <string name="register">Kaydol</string>
+    <string name="select_profile_picture">Profil Fotoğrafı Seçin</string>
+    <string name="user_create_ok_msg">Kullanıcı oluşturuldu</string>
+    <string name="login_err_msg">Giriş yapılamadı</string>
+    <string name="sign_out">Çıkış Yap</string>
+    <string name="login_help_text">Yardıma mı ihtiyacınız var?</string>
+    <string name="fill_empty_fields">Boş alanları doldurun</string>
+    <string name="password_reset_info_text">E-posta adresinizi girin. Size bir link yollayacağız.</string>
+    <string name="send_password_reset_email">E-posta gönder</string>
+    <string name="title_profile">Profil</string>
+    <string name="title_friends">Arkadaşlar</string>
+    <string name="verification_info_text">Uygulamayı kullanmadan önce, e-posta adresinizi doğrulamalısınız. Lütfen aşağıdaki butona tıklayıp doğrulama e-postası gönderin.</string>
+    <string name="verification_check">Kontrol Et</string>
+    <string name="verification_check_text">Eğer e-postanızı doğruladıysanız lütfen aşağıdaki butona tıklayın..</string>
+    <string name="user_not_verified_msg">Kullanıcı doğrulanmadı</string>
+    <string name="verification_email_send_ok_msg">Doğrulama e-postası gönderildi</string>
+    <string name="verification_email_send_err_msg">Doğrulama e-postası gönderilemedi</string>
+    <string name="user_verified_ok_msg">Kullanıcı doğrulandı</string>
+    <string name="register_first_name">İsim</string>
+    <string name="register_last_name">Soyisim</string>
+    <string name="login_empty_field">Boş Alan</string>
+</resources>

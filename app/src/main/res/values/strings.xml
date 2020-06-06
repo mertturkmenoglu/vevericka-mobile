@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vevericka</string>
+    <string name="app_name" translatable="false">Vevericka</string>
     <string name="title_home">Home</string>
     <string name="title_messages">Messages</string>
     <string name="title_notifications">Notifications</string>
@@ -37,4 +37,5 @@
     <string name="user_verified_ok_msg">User is verified</string>
     <string name="register_first_name">First Name</string>
     <string name="register_last_name">Last Name</string>
+    <string name="login_empty_field">Empty field</string>
 </resources>
