@@ -38,7 +38,8 @@ class LoginActivity : AppCompatActivity() {
             val password = mPasswordEditText.text?.toString()?.trim() ?: return@setOnClickListener
 
             if (email.isBlank() || password.isBlank()) {
-                Snackbar.make(view, "Empty field", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view, getString(R.string.login_empty_field), Snackbar.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
