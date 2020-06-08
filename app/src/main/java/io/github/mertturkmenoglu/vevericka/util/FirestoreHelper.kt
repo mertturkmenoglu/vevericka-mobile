@@ -2,8 +2,9 @@ package io.github.mertturkmenoglu.vevericka.util
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import io.github.mertturkmenoglu.vevericka.data.User
+import io.github.mertturkmenoglu.vevericka.data.model.User
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.verbose
 
@@ -17,6 +18,10 @@ object FirestoreHelper : AnkoLogger {
         val ref = instance.collection(Constants.Collections.USERS).document(currentUser.uid)
 
         return ref.set(user)
+    }
+
+    fun getUser(uid: String): Task<DocumentSnapshot> {
+        return users.document(uid).get()
     }
 
     fun updateImageUrl(uid: String, newPath: String): Task<Void> {

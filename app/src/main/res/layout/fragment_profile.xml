@@ -6,18 +6,136 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.profile.ProfileFragment">
 
-    <TextView
-        android:id="@+id/text_profile"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/profile_card_view_elevation"
+        app:layout_constraintEnd_toEndOf="@id/vertical_end_guideline"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/profileProfileImage"
+                android:layout_width="@dimen/profile_profile_image_width"
+                android:layout_height="@dimen/profile_profile_image_height"
+                android:layout_marginTop="@dimen/profile_card_view_profile_image_margin"
+                android:contentDescription="@string/profile_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_squirrel" />
+
+            <TextView
+                android:id="@+id/profileUserFullName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_card_view_user_full_name_margin"
+                android:fontFamily="@font/montserrat"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/profile_user_full_name_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileProfileImage"
+                tools:text="USER FULL NAME" />
+
+            <TextView
+                android:id="@+id/profileUserBio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_card_view_user_bio_margin"
+                android:fontFamily="@font/montserrat"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/profile_user_bio_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileUserFullName"
+                tools:text="USER BIO\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum justo. Donec euismod porttitor varius. Suspendisse ac dignissim diam." />
+
+            <TextView
+                android:id="@+id/profileUserLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_card_view_user_location_margin"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/profile_user_location"
+                android:textAlignment="center"
+                android:textSize="@dimen/profile_user_location_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileUserBio" />
+
+            <TextView
+                android:id="@+id/profileUserWebsite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_card_view_user_website_margin"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/profile_user_website"
+                android:textAlignment="center"
+                android:textSize="@dimen/profile_user_website_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileUserLocation" />
+
+            <Button
+                android:id="@+id/profilePostsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_card_view_posts_margin"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/profile_posts"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/profile_posts_size"
+                app:backgroundTint="@color/colorAppRed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/profileFriendsButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileUserWebsite" />
+
+            <Button
+                android:id="@+id/profileFriendsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/profile_card_view_friends_margin"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/profile_friends"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/profile_friends_size"
+                app:backgroundTint="@color/colorAppRed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profilePostsButton"
+                app:layout_constraintTop_toBottomOf="@id/profileUserWebsite" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

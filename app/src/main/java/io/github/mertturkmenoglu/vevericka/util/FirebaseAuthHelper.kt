@@ -9,6 +9,10 @@ object FirebaseAuthHelper {
     val isLoggedIn: Boolean
         get() = instance.currentUser != null
 
+    fun getCurrentUserId(): String {
+        return instance.currentUser?.uid ?: throw IllegalStateException()
+    }
+
     fun createUser(email: String, password: String): Task<AuthResult> {
         return instance.createUserWithEmailAndPassword(email, password)
     }

@@ -38,4 +38,9 @@
     <string name="register_first_name">First Name</string>
     <string name="register_last_name">Last Name</string>
     <string name="login_empty_field">Empty field</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="profile_user_location">Location: %s</string>
+    <string name="profile_user_website">Website: %s</string>
+    <string name="profile_posts">Posts</string>
+    <string name="profile_friends">Friends</string>
 </resources>

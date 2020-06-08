@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import io.github.mertturkmenoglu.vevericka.R
-import io.github.mertturkmenoglu.vevericka.data.User
+import io.github.mertturkmenoglu.vevericka.data.model.User
 import io.github.mertturkmenoglu.vevericka.ui.main.MainActivity
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import io.github.mertturkmenoglu.vevericka.util.FirestoreHelper

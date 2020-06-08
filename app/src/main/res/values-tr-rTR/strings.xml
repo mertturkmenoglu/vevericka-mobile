@@ -38,4 +38,9 @@
     <string name="register_first_name">İsim</string>
     <string name="register_last_name">Soyisim</string>
     <string name="login_empty_field">Boş Alan</string>
+    <string name="profile_image">Profil Fotoğrafı</string>
+    <string name="profile_user_location">Konum: %s</string>
+    <string name="profile_user_website">Web: %s</string>
+    <string name="profile_posts">Gönderiler</string>
+    <string name="profile_friends">Arkadaşlar</string>
 </resources>
