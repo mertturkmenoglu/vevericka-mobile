@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="io.github.mertturkmenoglu.vevericka.ui.main.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_post_detail"
+            app:destination="@id/navigation_post_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_messages"
@@ -34,4 +38,17 @@
         android:name="io.github.mertturkmenoglu.vevericka.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_post_detail"
+        android:name="io.github.mertturkmenoglu.vevericka.ui.main.post.PostDetailFragment"
+        android:label="@string/post_detail"
+        tools:layout="@layout/fragment_post_detail">
+        <argument
+            android:name="post"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_post_detail_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>

@@ -54,4 +54,8 @@
     <string name="new_post_image">Yeni Gönderi Fotoğrafı</string>
     <string name="new_post_content_hint">Açıklama</string>
     <string name="select_image">Fotoğraf seçiniz</string>
+    <string name="post_detail">Yorumlar</string>
+    <string name="new_comment">Yeni yorum</string>
+    <string name="comment_dialog_new_comment">Yorum Yap</string>
+    <string name="comment">Yorum</string>
 </resources>

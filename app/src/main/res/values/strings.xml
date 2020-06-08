@@ -54,4 +54,8 @@
     <string name="new_post_image">New Post Image</string>
     <string name="new_post_content_hint">Description</string>
     <string name="select_image">Select an image</string>
+    <string name="post_detail">Comments</string>
+    <string name="new_comment">New Comment</string>
+    <string name="comment_dialog_new_comment">Comment</string>
+    <string name="comment">Comment</string>
 </resources>

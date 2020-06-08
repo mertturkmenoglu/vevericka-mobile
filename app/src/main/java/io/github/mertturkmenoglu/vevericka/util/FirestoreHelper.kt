@@ -2,9 +2,11 @@ package io.github.mertturkmenoglu.vevericka.util
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObjects
+import io.github.mertturkmenoglu.vevericka.data.model.Comment
 import io.github.mertturkmenoglu.vevericka.data.model.Post
 import io.github.mertturkmenoglu.vevericka.data.model.User
 import kotlinx.coroutines.tasks.await
@@ -47,6 +49,30 @@ object FirestoreHelper : AnkoLogger {
         } catch (e: Exception) {
             error { "GetAllPosts failed: $e" }
             emptyList()
+        }
+    }
+
+    suspend fun getPostReference(post: Post): DocumentReference {
+        return users.document(post.uid)
+            .collection(Constants.Collections.POSTS)
+            .get()
+            .await()
+            .first {
+                post.uid == it.getString("uid")
+                        && it.getTimestamp("timestamp")?.equals(post.timestamp) == true
+            }
+            .reference
+    }
+
+    suspend fun addNewComment(post: Post, comment: Comment): Boolean {
+        return try {
+            val updatedComments = post.comments.toMutableList().apply { add(comment) }
+            getPostReference(post).update("comments", updatedComments).await()
+            true
+        } catch (e: Exception) {
+            error { "AddNewComment failed: $e" }
+            e.printStackTrace()
+            false
         }
     }
 }

@@ -15,6 +15,7 @@ import com.google.firebase.firestore.ktx.toObject
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.data.model.Post
 import io.github.mertturkmenoglu.vevericka.data.model.User
+import io.github.mertturkmenoglu.vevericka.interfaces.PostClickListener
 import io.github.mertturkmenoglu.vevericka.util.FirestoreHelper
 import io.github.mertturkmenoglu.vevericka.util.StorageHelper
 import kotlinx.android.synthetic.main.item_home_post.view.*
@@ -34,6 +35,8 @@ class PostAdapter(private val context: Context) :
             }
         }
     }
+
+    private lateinit var listener: PostClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -67,6 +70,14 @@ class PostAdapter(private val context: Context) :
         }
     }
 
+    fun setPostClickListener(action: (post: Post) -> Unit) {
+        this.listener = object : PostClickListener {
+            override fun onClick(post: Post) {
+                action(post)
+            }
+        }
+    }
+
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val profilePicture: ImageView = view.postItemProfilePicture
         val content: TextView = view.postItemContent
@@ -74,5 +85,14 @@ class PostAdapter(private val context: Context) :
         val image: ImageView = view.postItemImage
         val favorites: TextView = view.postItemFavCount
         val comments: TextView = view.postItemCommentsCount
+
+        init {
+            view.setOnClickListener {
+                val isInitialized = this@PostAdapter::listener.isInitialized
+                if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.onClick(getItem(adapterPosition))
+                }
+            }
+        }
     }
 }
