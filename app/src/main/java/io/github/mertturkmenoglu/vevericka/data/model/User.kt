@@ -4,7 +4,6 @@ import com.google.firebase.Timestamp
 import io.github.mertturkmenoglu.vevericka.util.Constants
 import java.util.*
 
-@Suppress("unused")
 data class User(
     val firstName: String,
     val lastName: String,
@@ -18,9 +17,9 @@ data class User(
     val location: String = "",
     val website: String = ""
 ) {
-    constructor() : this("", "", "") {
-        // Needed for Firebase
-    }
+    // Needed for Firebase
+    @Suppress("unused")
+    constructor() : this("", "", "")
 
     fun getFullName() = "${firstName.trim()} ${lastName.trim()}"
 }

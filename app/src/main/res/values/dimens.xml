@@ -18,4 +18,14 @@
     <dimen name="profile_card_view_friends_margin">16dp</dimen>
     <dimen name="profile_friends_size">16sp</dimen>
     <dimen name="profile_posts_size">16sp</dimen>
+    <dimen name="home_new_post_fab_margin">32dp</dimen>
+    <dimen name="home_post_card_view_elevation">8dp</dimen>
+    <dimen name="post_item_profile_picture_width">32dp</dimen>
+    <dimen name="post_item_profile_picture_height">32dp</dimen>
+    <dimen name="post_item_profile_picture_margin_start">12dp</dimen>
+    <dimen name="post_item_profile_picture_margin_top">12dp</dimen>
+    <dimen name="post_item_user_full_name_margin_start">16dp</dimen>
+    <dimen name="post_item_user_full_name_size">12sp</dimen>
+    <dimen name="post_item_image_margin_top">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

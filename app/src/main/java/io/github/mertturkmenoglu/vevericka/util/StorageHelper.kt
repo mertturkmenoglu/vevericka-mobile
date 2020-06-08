@@ -14,6 +14,6 @@ object StorageHelper {
         return imagesRef.child(childRef).putBytes(image)
     }
 
-    fun getProfilePictureUrl(uid: String): Task<Uri> = imagesRef.child(uid).downloadUrl
+    fun getPictureDownloadUrl(childRef: String): Task<Uri> = imagesRef.child(childRef).downloadUrl
 
 }

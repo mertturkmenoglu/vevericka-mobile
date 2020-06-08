@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="16dp"
+
+    android:elevation="@dimen/home_post_card_view_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/postItemProfilePicture"
+            android:layout_width="@dimen/post_item_profile_picture_width"
+            android:layout_height="@dimen/post_item_profile_picture_height"
+            android:layout_marginStart="@dimen/post_item_profile_picture_margin_start"
+            android:layout_marginTop="@dimen/post_item_profile_picture_margin_top"
+            android:contentDescription="@string/post_item_profile_picture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_squirrel" />
+
+        <TextView
+            android:id="@+id/postItemUserFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/post_item_user_full_name_margin_start"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/post_item_user_full_name_size"
+            app:layout_constraintBottom_toBottomOf="@+id/postItemProfilePicture"
+            app:layout_constraintStart_toEndOf="@id/postItemProfilePicture"
+            app:layout_constraintTop_toTopOf="@+id/postItemProfilePicture"
+            tools:text="USER FULL NAME" />
+
+        <ImageView
+            android:id="@+id/postItemImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/post_item_image_margin_top"
+            android:contentDescription="@string/post_item_image"
+            app:layout_constraintBottom_toTopOf="@id/postItemFavButton"
+            app:layout_constraintDimensionRatio="W,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postItemProfilePicture"
+            tools:src="@drawable/rect_post_image_cat" />
+
+        <ImageButton
+            android:id="@+id/postItemFavButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/post_item_favorites_button"
+            android:src="@drawable/ic_round_favorite_border_24dp"
+            app:layout_constraintBottom_toTopOf="@id/postItemContent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postItemImage" />
+
+        <TextView
+            android:id="@+id/postItemFavCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/postItemFavButton"
+            app:layout_constraintStart_toEndOf="@id/postItemFavButton"
+            app:layout_constraintTop_toTopOf="@id/postItemFavButton"
+            tools:text="@string/post_item_likes" />
+
+        <ImageButton
+            android:id="@+id/postItemCommentsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/post_item_comments_button"
+            android:src="@drawable/ic_round_notes_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/postItemFavButton"
+            app:layout_constraintStart_toEndOf="@id/postItemFavCount"
+            app:layout_constraintTop_toTopOf="@id/postItemFavButton" />
+
+        <TextView
+            android:id="@+id/postItemCommentsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/postItemFavButton"
+            app:layout_constraintStart_toEndOf="@id/postItemCommentsButton"
+            app:layout_constraintTop_toTopOf="@id/postItemFavButton"
+            tools:text="@string/post_item_comments" />
+
+        <TextView
+            android:id="@+id/postItemContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Lorem ipsum dolor sit amet" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

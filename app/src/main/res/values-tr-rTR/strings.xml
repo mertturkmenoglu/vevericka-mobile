@@ -43,4 +43,15 @@
     <string name="profile_user_website">Web: %s</string>
     <string name="profile_posts">Gönderiler</string>
     <string name="profile_friends">Arkadaşlar</string>
+    <string name="post_item_profile_picture">Gönderi Profil Fotoğrafı</string>
+    <string name="post_item_image">Gönderi Fotoğrafı</string>
+    <string name="post_item_favorites_button">Gönderi Beğeni Butonu</string>
+    <string name="post_item_comments_button">Gönderi Yorumlar Butonu</string>
+    <string name="post_item_comments">%d yorum</string>
+    <string name="post_item_likes">%d beğeni</string>
+    <string name="title_activity_new_post">Yeni Gönderi</string>
+    <string name="new_post">Yeni Gönderi</string>
+    <string name="new_post_image">Yeni Gönderi Fotoğrafı</string>
+    <string name="new_post_content_hint">Açıklama</string>
+    <string name="select_image">Fotoğraf seçiniz</string>
 </resources>

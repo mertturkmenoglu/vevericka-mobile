@@ -55,7 +55,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun loadProfileImage(uid: String) {
-        StorageHelper.getProfilePictureUrl(uid).addOnSuccessListener {
+        StorageHelper.getPictureDownloadUrl(uid).addOnSuccessListener {
             val imageWidth = resources.getDimension(R.dimen.profile_profile_image_width).toInt()
             val imageHeight = resources.getDimension(R.dimen.profile_profile_image_height).toInt()
 

@@ -43,4 +43,15 @@
     <string name="profile_user_website">Website: %s</string>
     <string name="profile_posts">Posts</string>
     <string name="profile_friends">Friends</string>
+    <string name="post_item_profile_picture">Post item profile picture</string>
+    <string name="post_item_image">Post item image</string>
+    <string name="post_item_favorites_button">Post item favorites button</string>
+    <string name="post_item_comments_button">Post item comments button</string>
+    <string name="post_item_comments">%d comments</string>
+    <string name="post_item_likes">%d likes</string>
+    <string name="title_activity_new_post">New Post</string>
+    <string name="new_post">New Post</string>
+    <string name="new_post_image">New Post Image</string>
+    <string name="new_post_content_hint">Description</string>
+    <string name="select_image">Select an image</string>
 </resources>

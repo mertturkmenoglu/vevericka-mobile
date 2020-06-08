@@ -6,4 +6,5 @@
     <color name="colorAppPurple">#AA00FF</color>
     <color name="colorAppYellow">#FFD600</color>
     <color name="colorAppRed">#DD2C00</color>
+    <color name="colorAppLightGray">#adadad</color>
 </resources>

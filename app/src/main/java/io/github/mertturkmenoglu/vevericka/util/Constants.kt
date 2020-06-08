@@ -3,6 +3,7 @@ package io.github.mertturkmenoglu.vevericka.util
 object Constants {
     object Collections {
         const val USERS = "users"
+        const val POSTS = "posts"
     }
 
     object UserFields {
