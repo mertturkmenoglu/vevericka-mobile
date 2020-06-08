@@ -63,6 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/colorAppRed"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@id/loginAppName">
@@ -80,6 +82,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/colorAppRed"
         app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
