@@ -5,6 +5,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
 import io.github.mertturkmenoglu.vevericka.data.model.Comment
 import io.github.mertturkmenoglu.vevericka.data.model.Post
@@ -26,8 +27,12 @@ object FirestoreHelper : AnkoLogger {
         return ref.set(user)
     }
 
-    fun getUser(uid: String): Task<DocumentSnapshot> {
+    fun getUserAsTask(uid: String): Task<DocumentSnapshot> {
         return users.document(uid).get()
+    }
+
+    suspend fun getUser(uid: String): User {
+        return users.document(uid).get().await().toObject<User>() ?: throw ClassCastException()
     }
 
     fun updateImageUrl(uid: String, newPath: String): Task<Void> {
@@ -39,13 +44,35 @@ object FirestoreHelper : AnkoLogger {
         return users.document(uid).collection(Constants.Collections.POSTS).document().set(post)
     }
 
-    suspend fun getAllPosts(uid: String): List<Post> {
+    suspend fun getUserPosts(uid: String): List<Post> {
         return try {
             users.document(uid)
                 .collection(Constants.Collections.POSTS)
                 .get()
                 .await()
                 .toObjects()
+        } catch (e: Exception) {
+            error { "GetUserPosts failed: $e" }
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
+    suspend fun getFriendsPosts(uid: String): List<Post> {
+        return try {
+            getUser(uid).friends.flatMap {
+                getUserPosts(it)
+            }
+        } catch (e: Exception) {
+            error { "GetFriendsPosts failed: $e" }
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
+    suspend fun getAllPosts(uid: String): List<Post> {
+        return try {
+            getUserPosts(uid).union(getFriendsPosts(uid)).toList()
         } catch (e: Exception) {
             error { "GetAllPosts failed: $e" }
             emptyList()

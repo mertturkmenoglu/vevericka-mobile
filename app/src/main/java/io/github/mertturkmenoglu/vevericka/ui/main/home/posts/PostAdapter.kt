@@ -53,7 +53,7 @@ class PostAdapter(private val context: Context) :
         holder.favorites.text = favCount
         holder.comments.text = comment
 
-        FirestoreHelper.getUser(post.uid).addOnSuccessListener {
+        FirestoreHelper.getUserAsTask(post.uid).addOnSuccessListener {
             val user = it.toObject<User>()
             holder.fullName.text = user?.getFullName()
 

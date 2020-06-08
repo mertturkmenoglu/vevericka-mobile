@@ -30,7 +30,7 @@ class ProfileViewModel : ViewModel() {
 
     private suspend fun getUserData(uid: String) {
         try {
-            val result = FirestoreHelper.getUser(uid).await()
+            val result = FirestoreHelper.getUserAsTask(uid).await()
             val user = result.toObject<User>()
             mUser.postValue(user)
         } catch (e: FirebaseFirestoreException) {

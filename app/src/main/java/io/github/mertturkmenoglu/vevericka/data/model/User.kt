@@ -12,7 +12,8 @@ data class User(
     val createDate: Timestamp = Timestamp(Calendar.getInstance().time),
     val postCount: Int = 0,
     val imageUrl: String = "defaultProfilePicture",
-    val friendsCount: Int = 0,
+    val friends: List<String> = emptyList(),
+    val pendingFriendRequests: List<String> = emptyList(),
     val bio: String = "",
     val location: String = "",
     val website: String = ""

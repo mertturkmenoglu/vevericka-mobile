@@ -48,7 +48,7 @@ class CommentAdapter(private val context: Context) :
         val comment = getItem(position)
         holder.content.text = comment.content
 
-        FirestoreHelper.getUser(comment.uid).addOnSuccessListener {
+        FirestoreHelper.getUserAsTask(comment.uid).addOnSuccessListener {
             val user = it.toObject<User>()
             holder.fullName.text = user?.getFullName()
 
