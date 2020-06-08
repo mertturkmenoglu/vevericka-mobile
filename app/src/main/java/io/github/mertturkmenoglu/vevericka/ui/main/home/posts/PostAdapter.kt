@@ -1,4 +1,4 @@
-package io.github.mertturkmenoglu.vevericka.ui.main.home
+package io.github.mertturkmenoglu.vevericka.ui.main.home.posts
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -20,7 +20,9 @@ import io.github.mertturkmenoglu.vevericka.util.StorageHelper
 import kotlinx.android.synthetic.main.item_home_post.view.*
 
 class PostAdapter(private val context: Context) :
-    ListAdapter<Post, PostAdapter.PostViewHolder>(DIFF_CALLBACK) {
+    ListAdapter<Post, PostAdapter.PostViewHolder>(
+        DIFF_CALLBACK
+    ) {
     private companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Post>() {
             override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {

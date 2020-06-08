@@ -9,7 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.mertturkmenoglu.vevericka.R
-import io.github.mertturkmenoglu.vevericka.ui.main.home.newpost.NewPostActivity
+import io.github.mertturkmenoglu.vevericka.ui.main.home.posts.NewPostActivity
+import io.github.mertturkmenoglu.vevericka.ui.main.home.posts.PostAdapter
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.support.v4.startActivity

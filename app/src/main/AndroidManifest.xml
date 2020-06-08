@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.main.home.newpost.NewPostActivity"
+            android:name=".ui.main.home.posts.NewPostActivity"
             android:label="@string/title_activity_new_post"
             android:parentActivityName=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

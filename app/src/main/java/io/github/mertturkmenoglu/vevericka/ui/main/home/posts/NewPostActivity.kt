@@ -1,4 +1,4 @@
-package io.github.mertturkmenoglu.vevericka.ui.main.home.newpost
+package io.github.mertturkmenoglu.vevericka.ui.main.home.posts
 
 import android.app.Activity
 import android.content.Intent
