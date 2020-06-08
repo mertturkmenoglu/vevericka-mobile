@@ -3,6 +3,8 @@ package io.github.mertturkmenoglu.vevericka.ui.main.profile
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -54,9 +56,12 @@ class ProfileFragment : Fragment() {
 
     private fun loadProfileImage(uid: String) {
         StorageHelper.getProfilePictureUrl(uid).addOnSuccessListener {
+            val imageWidth = resources.getDimension(R.dimen.profile_profile_image_width).toInt()
+            val imageHeight = resources.getDimension(R.dimen.profile_profile_image_height).toInt()
+
             Glide.with(this)
                 .load(it)
-                .override(125, 125)
+                .override(imageWidth, imageHeight)
                 .apply(RequestOptions().circleCrop())
                 .into(profileProfileImage)
         }
@@ -68,15 +73,18 @@ class ProfileFragment : Fragment() {
 
     private fun setBio(user: User) {
         profileUserBio.text = user.bio
+        profileUserBio.visibility = if (user.bio.isNotBlank()) VISIBLE else GONE
     }
 
     private fun setLocation(user: User) {
         val locationText = String.format(getString(R.string.profile_user_location), user.location)
         profileUserLocation.text = locationText
+        profileUserLocation.visibility = if (user.location.isNotBlank()) VISIBLE else GONE
     }
 
     private fun setWebsite(user: User) {
         val websiteText = String.format(getString(R.string.profile_user_website), user.website)
         profileUserWebsite.text = websiteText
+        profileUserWebsite.visibility = if (user.website.isNotBlank()) VISIBLE else GONE
     }
 }

@@ -81,29 +81,30 @@
 
             <TextView
                 android:id="@+id/profileUserLocation"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_card_view_user_location_margin"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/profile_user_location"
                 android:textAlignment="center"
                 android:textSize="@dimen/profile_user_location_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileUserBio" />
+                app:layout_constraintTop_toBottomOf="@id/profileUserBio"
+                tools:text="@string/profile_user_location" />
 
             <TextView
                 android:id="@+id/profileUserWebsite"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/profile_card_view_user_website_margin"
                 android:fontFamily="@font/montserrat"
-                android:text="@string/profile_user_website"
                 android:textAlignment="center"
+                android:clickable="true"
                 android:textSize="@dimen/profile_user_website_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileUserLocation" />
+                app:layout_constraintTop_toBottomOf="@id/profileUserLocation"
+                tools:text="@string/profile_user_website" />
 
             <Button
                 android:id="@+id/profilePostsButton"
