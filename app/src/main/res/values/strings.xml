@@ -58,4 +58,6 @@
     <string name="new_comment">New Comment</string>
     <string name="comment_dialog_new_comment">Comment</string>
     <string name="comment">Comment</string>
+    <string name="person_item_profile_image">Person item profile image</string>
+    <string name="friends_add_friend">Add friend</string>
 </resources>

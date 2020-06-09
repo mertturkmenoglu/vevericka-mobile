@@ -58,4 +58,6 @@
     <string name="new_comment">Yeni yorum</string>
     <string name="comment_dialog_new_comment">Yorum Yap</string>
     <string name="comment">Yorum</string>
+    <string name="person_item_profile_image">Kullanıcı profil fotoğrafı</string>
+    <string name="friends_add_friend">Arkadaş ekle</string>
 </resources>

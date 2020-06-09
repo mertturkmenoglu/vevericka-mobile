@@ -102,4 +102,14 @@ object FirestoreHelper : AnkoLogger {
             false
         }
     }
+
+    suspend fun getFriends(uid: String): List<User> {
+        return try {
+            getUser(uid).friends.map { getUser(it) }
+        } catch (e: Exception) {
+            error { "GetFriends failed: $e" }
+            e.printStackTrace()
+            emptyList()
+        }
+    }
 }
