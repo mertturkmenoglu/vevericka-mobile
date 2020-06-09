@@ -5,16 +5,18 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.data.model.Comment
 import io.github.mertturkmenoglu.vevericka.data.model.Post
 import io.github.mertturkmenoglu.vevericka.ui.main.home.HomeFragment
+import io.github.mertturkmenoglu.vevericka.ui.main.profile.ProfileFragment
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import kotlinx.android.synthetic.main.fragment_post_detail.view.*
 import org.jetbrains.anko.customView
@@ -59,7 +61,11 @@ class PostDetailFragment : Fragment() {
 
         root.postDetailCommentsRecyclerView.adapter = mAdapter
         mAdapter.setPostClickListener {
-            Toast.makeText(ctx, "Comment click", Toast.LENGTH_SHORT).show()
+            val args = bundleOf(ProfileFragment.KEY_PROFILE_UID to it)
+            findNavController().navigate(
+                R.id.action_navigation_post_detail_to_navigation_profile,
+                args
+            )
         }
     }
 

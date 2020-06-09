@@ -39,6 +39,7 @@ class ProfileFragment : Fragment() {
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         mRoot = inflater.inflate(R.layout.fragment_profile, container, false)
+        initRecyclerView()
 
         val uid = arguments?.getString(KEY_PROFILE_UID) ?: FirebaseAuthHelper.getCurrentUserId()
         profileViewModel.getUser(uid).observe(viewLifecycleOwner, Observer {
@@ -69,8 +70,6 @@ class ProfileFragment : Fragment() {
         profileEditProfileButton.setOnClickListener {
             editProfile(uid)
         }
-
-        initRecyclerView()
     }
 
     private fun initRecyclerView() {

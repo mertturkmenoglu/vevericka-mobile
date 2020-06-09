@@ -36,13 +36,20 @@
             android:id="@+id/action_navigation_friends_to_searchFragment"
             app:destination="@id/searchFragment"
             app:popUpTo="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_navigation_friends_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="io.github.mertturkmenoglu.vevericka.ui.main.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="user"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_post_detail"
@@ -55,6 +62,9 @@
         <action
             android:id="@+id/action_navigation_post_detail_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_post_detail_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -65,5 +75,8 @@
             android:id="@+id/action_searchFragment_to_navigation_friends"
             app:destination="@id/navigation_friends"
             app:popUpTo="@id/navigation_friends" />
+        <action
+            android:id="@+id/action_searchFragment_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 </navigation>

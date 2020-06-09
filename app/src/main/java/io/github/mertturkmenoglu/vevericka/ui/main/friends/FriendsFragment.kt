@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.mertturkmenoglu.vevericka.R
+import io.github.mertturkmenoglu.vevericka.ui.main.profile.ProfileFragment
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import kotlinx.android.synthetic.main.fragment_friends.view.*
 
@@ -47,7 +48,8 @@ class FriendsFragment : Fragment() {
         mAdapter = PersonAdapter(ctx)
         mRoot.friendsRecyclerView.adapter = mAdapter
         mAdapter.setPersonClickListener {
-            Toast.makeText(ctx, "Clicked", Toast.LENGTH_SHORT).show()
+            val args = bundleOf(ProfileFragment.KEY_PROFILE_UID to it.imageUrl)
+            findNavController().navigate(R.id.action_navigation_friends_to_navigation_profile, args)
         }
     }
 
