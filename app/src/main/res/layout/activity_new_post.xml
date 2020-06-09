@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,10 @@
     tools:context=".ui.main.home.posts.NewPostActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -20,51 +24,48 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/newPostImage"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/colorAppRed"
+        android:contentDescription="@string/new_post_image"
+        android:src="@drawable/ic_baseline_add_circle_outline_black_24dp"
+        app:layout_constraintBottom_toTopOf="@id/newPostContentTextInput"
+        app:layout_constraintDimensionRatio="W,9:16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newPostContentTextInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        app:boxStrokeColor="@color/colorAppRed"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/newPostAddNewPostFab"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
-            android:id="@+id/newPostImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:backgroundTint="@color/colorAppRed"
-            android:contentDescription="@string/new_post_image"
-            android:src="@drawable/ic_baseline_add_circle_outline_black_24dp"
-            app:layout_constraintBottom_toTopOf="@id/newPostContentTextInput"
-            app:layout_constraintDimensionRatio="W,16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/newPostContentTextInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            app:boxStrokeColor="@color/colorAppRed"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newPostImage">
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/new_post_content_hint" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:hint="@string/new_post_content_hint" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/newPostAddNewPostFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_round_add_white_24dp" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:text="@string/new_post"
+        app:icon="@drawable/ic_round_add_white_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
