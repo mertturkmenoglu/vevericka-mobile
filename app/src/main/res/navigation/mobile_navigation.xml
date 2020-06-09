@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_post_detail"
             app:destination="@id/navigation_post_detail" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment
@@ -52,6 +55,12 @@
         <argument
             android:name="user"
             app:argType="string" />
+        <action
+            android:id="@+id/action_navigation_profile_self"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_post_detail"
+            app:destination="@id/navigation_post_detail" />
     </fragment>
 
     <fragment

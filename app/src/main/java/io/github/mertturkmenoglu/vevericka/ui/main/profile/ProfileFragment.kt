@@ -7,15 +7,21 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 import io.github.mertturkmenoglu.vevericka.R
+import io.github.mertturkmenoglu.vevericka.data.model.Post
 import io.github.mertturkmenoglu.vevericka.data.model.User
+import io.github.mertturkmenoglu.vevericka.interfaces.PostClickListener
+import io.github.mertturkmenoglu.vevericka.ui.main.home.HomeFragment
 import io.github.mertturkmenoglu.vevericka.ui.main.home.posts.PostAdapter
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import io.github.mertturkmenoglu.vevericka.util.StorageHelper
@@ -109,9 +115,23 @@ class ProfileFragment : Fragment() {
         mRoot.profileRecyclerView.layoutManager = LinearLayoutManager(ctx)
         mAdapter = PostAdapter(ctx)
         mRoot.profileRecyclerView.adapter = mAdapter
-        mAdapter.setPostClickListener {
-            Toast.makeText(ctx, "Clicked", Toast.LENGTH_SHORT).show()
-        }
+        mAdapter.setPostClickListener(object : PostClickListener {
+            override fun onCommentClick(post: Post) {
+                val args = bundleOf(HomeFragment.KEY_POST to Gson().toJson(post))
+                val action = R.id.action_navigation_profile_to_navigation_post_detail
+                findNavController().navigate(action, args)
+            }
+
+            override fun onFavClick(post: Post) {
+                Toast.makeText(ctx, post.content, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onPersonClick(post: Post) {
+                val args = bundleOf(KEY_PROFILE_UID to post.uid)
+                val action = R.id.action_navigation_profile_self
+                findNavController().navigate(action, args)
+            }
+        })
     }
 
     private fun editProfile(uid: String) {

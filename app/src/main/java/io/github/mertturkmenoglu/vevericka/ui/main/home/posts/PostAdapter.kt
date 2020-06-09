@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -70,12 +71,8 @@ class PostAdapter(private val context: Context) :
         }
     }
 
-    fun setPostClickListener(action: (post: Post) -> Unit) {
-        this.listener = object : PostClickListener {
-            override fun onClick(post: Post) {
-                action(post)
-            }
-        }
+    fun setPostClickListener(listener: PostClickListener) {
+        this.listener = listener
     }
 
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -85,12 +82,42 @@ class PostAdapter(private val context: Context) :
         val image: ImageView = view.postItemImage
         val favorites: TextView = view.postItemFavCount
         val comments: TextView = view.postItemCommentsCount
+        private val commentsIcon: ImageButton = view.postItemCommentsButton
+        private val favIcon: ImageButton = view.postItemFavButton
 
         init {
-            view.setOnClickListener {
+            comments.setOnClickListener {
                 val isInitialized = this@PostAdapter::listener.isInitialized
                 if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
-                    listener.onClick(getItem(adapterPosition))
+                    listener.onCommentClick(getItem(adapterPosition))
+                }
+            }
+
+            commentsIcon.setOnClickListener {
+                val isInitialized = this@PostAdapter::listener.isInitialized
+                if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.onCommentClick(getItem(adapterPosition))
+                }
+            }
+
+            profilePicture.setOnClickListener {
+                val isInitialized = this@PostAdapter::listener.isInitialized
+                if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.onPersonClick(getItem(adapterPosition))
+                }
+            }
+
+            fullName.setOnClickListener {
+                val isInitialized = this@PostAdapter::listener.isInitialized
+                if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.onPersonClick(getItem(adapterPosition))
+                }
+            }
+
+            favIcon.setOnClickListener {
+                val isInitialized = this@PostAdapter::listener.isInitialized
+                if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.onFavClick(getItem(adapterPosition))
                 }
             }
         }
