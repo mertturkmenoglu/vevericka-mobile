@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_navigation_friends_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_friends_to_friendshipRequestsFragment"
+            app:destination="@id/friendshipRequestsFragment" />
     </fragment>
 
     <fragment
@@ -79,4 +82,9 @@
             android:id="@+id/action_searchFragment_to_navigation_profile"
             app:destination="@id/navigation_profile" />
     </fragment>
+    <fragment
+        android:id="@+id/friendshipRequestsFragment"
+        android:name="io.github.mertturkmenoglu.vevericka.ui.main.friendship.FriendshipRequestsFragment"
+        android:label="@string/friendship_requests"
+        tools:layout="@layout/fragment_friendship_requests" />
 </navigation>

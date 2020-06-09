@@ -63,4 +63,8 @@
     <string name="search_hint">Enter name or e-mail</string>
     <string name="title_search_user">Search User</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="friendship_request_profile_image">Friendship request profile image</string>
+    <string name="friendship_request_approve">Approve</string>
+    <string name="friendship_request_dismiss">Dismiss</string>
+    <string name="friendship_requests">Friendship Requests</string>
 </resources>

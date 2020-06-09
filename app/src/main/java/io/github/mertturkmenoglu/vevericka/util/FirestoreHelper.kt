@@ -151,4 +151,59 @@ object FirestoreHelper : AnkoLogger {
             false
         }
     }
+
+    suspend fun getFriendshipRequests(uid: String): List<User> {
+        return try {
+            getUser(uid).pendingFriendRequests.map { getUser(it) }
+        } catch (e: Exception) {
+            error { "GetFriendshipRequests failed: $e" }
+            emptyList()
+        }
+    }
+
+    suspend fun approveFriendshipRequest(thisUser: String, otherUser: String) {
+        try {
+            val currentUser = getUser(thisUser)
+            val oUser = getUser(otherUser)
+
+            val newPendingFriendRequests = currentUser
+                .pendingFriendRequests
+                .toMutableList()
+                .apply { remove(otherUser) }
+
+            val currentNewFriends = currentUser.friends.toMutableList().apply { add(otherUser) }
+            val otherNewFriends = oUser.friends.toMutableList().apply { add(thisUser) }
+
+            users.document(thisUser)
+                .update("pendingFriendRequests", newPendingFriendRequests)
+                .await()
+
+            users.document(thisUser)
+                .update("friends", currentNewFriends)
+                .await()
+
+            users.document(otherUser)
+                .update("friends", otherNewFriends)
+                .await()
+        } catch (e: Exception) {
+            error { "ApproveFriendshipRequest failed: $e" }
+        }
+    }
+
+    suspend fun dismissFriendshipRequest(thisUser: String, otherUser: String) {
+        try {
+            val currentUser = getUser(thisUser)
+
+            val newPendingFriendRequests = currentUser
+                .pendingFriendRequests
+                .toMutableList()
+                .apply { remove(otherUser) }
+
+            users.document(thisUser)
+                .update("pendingFriendRequests", newPendingFriendRequests)
+                .await()
+        } catch (e: Exception) {
+            error { "DismissFriendshipRequest failed: $e" }
+        }
+    }
 }

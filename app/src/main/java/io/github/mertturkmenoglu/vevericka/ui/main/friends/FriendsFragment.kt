@@ -39,6 +39,10 @@ class FriendsFragment : Fragment() {
             addFriend()
         }
 
+        mRoot.friendsRequestsFab.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_friends_to_friendshipRequestsFragment)
+        }
+
         return mRoot
     }
 

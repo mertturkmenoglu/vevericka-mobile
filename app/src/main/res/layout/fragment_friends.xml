@@ -25,13 +25,22 @@
             android:id="@+id/friendsAddFriendFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/home_new_post_fab_margin"
+            android:layout_marginBottom="24dp"
             android:text="@string/friends_add_friend"
             app:icon="@drawable/ic_round_add_white_24dp"
+            app:layout_constraintBottom_toTopOf="@+id/friendsRequestsFab"
+            app:layout_constraintEnd_toEndOf="@+id/friendsRequestsFab"
+            app:layout_constraintStart_toStartOf="@+id/friendsRequestsFab" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/friendsRequestsFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/home_new_post_fab_margin"
+            android:text="@string/friendship_requests"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
