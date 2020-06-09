@@ -134,7 +134,11 @@ object FirestoreHelper : AnkoLogger {
         return try {
             val user = getUser(to)
             val newPendingRequests = user.pendingFriendRequests.toMutableList().apply {
-                add(from)
+                if (from !in this) {
+                    add(from)
+                } else {
+                    return false
+                }
             }
 
             users.document(to)
