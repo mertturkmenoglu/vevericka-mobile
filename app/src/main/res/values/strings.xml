@@ -60,4 +60,6 @@
     <string name="comment">Comment</string>
     <string name="person_item_profile_image">Person item profile image</string>
     <string name="friends_add_friend">Add friend</string>
+    <string name="search_hint">Enter name or e-mail</string>
+    <string name="title_search_user">Search User</string>
 </resources>

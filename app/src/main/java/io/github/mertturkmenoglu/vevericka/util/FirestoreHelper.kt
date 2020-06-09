@@ -112,4 +112,21 @@ object FirestoreHelper : AnkoLogger {
             emptyList()
         }
     }
+
+    suspend fun searchUsers(query: String): List<User> {
+        return try {
+            users
+                .get()
+                .await()
+                .toObjects<User>()
+                .filter {
+                    it.getFullName().contains(query, ignoreCase = true)
+                            || it.email.contains(query, ignoreCase = true)
+                }
+        } catch (e: Exception) {
+            error { "SearchUsers failed: $e" }
+            e.printStackTrace()
+            emptyList()
+        }
+    }
 }

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
@@ -61,6 +62,6 @@ class FriendsFragment : Fragment() {
     }
 
     private fun addFriend() {
-        Toast.makeText(context, "Add friend clicked", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_navigation_friends_to_searchFragment)
     }
 }
