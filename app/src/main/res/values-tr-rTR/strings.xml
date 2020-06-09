@@ -62,4 +62,5 @@
     <string name="friends_add_friend">Arkadaş ekle</string>
     <string name="search_hint">İsim ya da e-posta girin</string>
     <string name="title_search_user">Kullanıcı Arama</string>
+    <string name="edit_profile">Profili Güncelle</string>
 </resources>

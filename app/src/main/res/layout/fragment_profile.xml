@@ -1,142 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.profile.ProfileFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_guideline"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        tools:context=".ui.main.profile.ProfileFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_end_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontal_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_end_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profileCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/profile_card_view_elevation"
-        app:layout_constraintEnd_toEndOf="@id/vertical_end_guideline"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.01" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profileCardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/profile_card_view_elevation"
+            app:layout_constraintEnd_toEndOf="@id/vertical_end_guideline"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
 
-            <ImageView
-                android:id="@+id/profileProfileImage"
-                android:layout_width="@dimen/profile_profile_image_width"
-                android:layout_height="@dimen/profile_profile_image_height"
-                android:layout_marginTop="@dimen/profile_card_view_profile_image_margin"
-                android:contentDescription="@string/profile_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_squirrel" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/profileUserFullName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_card_view_user_full_name_margin"
-                android:fontFamily="@font/montserrat"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profile_user_full_name_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileProfileImage"
-                tools:text="USER FULL NAME" />
+                <ImageView
+                    android:id="@+id/profileProfileImage"
+                    android:layout_width="@dimen/profile_profile_image_width"
+                    android:layout_height="@dimen/profile_profile_image_height"
+                    android:layout_marginTop="@dimen/profile_card_view_profile_image_margin"
+                    android:contentDescription="@string/profile_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_squirrel" />
 
-            <TextView
-                android:id="@+id/profileUserBio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_card_view_user_bio_margin"
-                android:fontFamily="@font/montserrat"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/profile_user_bio_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileUserFullName"
-                tools:text="USER BIO\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum justo. Donec euismod porttitor varius. Suspendisse ac dignissim diam." />
+                <TextView
+                    android:id="@+id/profileUserFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_card_view_user_full_name_margin"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/profile_user_full_name_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profileProfileImage"
+                    tools:text="USER FULL NAME" />
 
-            <TextView
-                android:id="@+id/profileUserLocation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_card_view_user_location_margin"
-                android:fontFamily="@font/montserrat"
-                android:textAlignment="center"
-                android:textSize="@dimen/profile_user_location_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileUserBio"
-                tools:text="@string/profile_user_location" />
+                <TextView
+                    android:id="@+id/profileUserBio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_card_view_user_bio_margin"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/profile_user_bio_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profileUserFullName"
+                    tools:text="USER BIO\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut ipsum justo. Donec euismod porttitor varius. Suspendisse ac dignissim diam." />
 
-            <TextView
-                android:id="@+id/profileUserWebsite"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_card_view_user_website_margin"
-                android:fontFamily="@font/montserrat"
-                android:textAlignment="center"
-                android:clickable="true"
-                android:textSize="@dimen/profile_user_website_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileUserLocation"
-                tools:text="@string/profile_user_website" />
+                <TextView
+                    android:id="@+id/profileUserLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_card_view_user_location_margin"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/profile_user_location_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profileUserBio"
+                    tools:text="@string/profile_user_location" />
 
-            <Button
-                android:id="@+id/profilePostsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_card_view_posts_margin"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/profile_posts"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/profile_posts_size"
-                app:backgroundTint="@color/colorAppRed"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/profileFriendsButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileUserWebsite" />
+                <TextView
+                    android:id="@+id/profileUserWebsite"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_card_view_user_website_margin"
+                    android:clickable="true"
+                    android:fontFamily="@font/montserrat"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/profile_user_website_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profileUserLocation"
+                    tools:text="@string/profile_user_website" />
 
-            <Button
-                android:id="@+id/profileFriendsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_card_view_friends_margin"
-                android:fontFamily="@font/montserrat"
-                android:text="@string/profile_friends"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/profile_friends_size"
-                app:backgroundTint="@color/colorAppRed"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/profilePostsButton"
-                app:layout_constraintTop_toBottomOf="@id/profileUserWebsite" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/profileEditProfileButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_profile"
+                    app:icon="@drawable/ic_round_edit_white_24p"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profileFriendsButton" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/profileFriendsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/profile_card_view_friends_margin"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@string/profile_friends"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/profile_friends_size"
+                    app:backgroundTint="@color/colorAppRed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profileUserWebsite" />
 
-    </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profileRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toEndOf="@id/vertical_end_guideline"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@id/profileCardView"
+            tools:listitem="@layout/item_home_post" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
