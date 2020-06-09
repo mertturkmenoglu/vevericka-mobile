@@ -9,6 +9,7 @@ import io.github.mertturkmenoglu.vevericka.data.model.User
 import io.github.mertturkmenoglu.vevericka.util.FirestoreHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 
@@ -32,6 +33,12 @@ class ProfileViewModel : ViewModel(), AnkoLogger {
         return mPosts
     }
 
+    suspend fun sendFriendshipRequest(from: String, to: String): Boolean {
+        return withContext(viewModelScope.coroutineContext + Dispatchers.IO) {
+            sendFriendshipRequestData(from, to)
+        }
+    }
+
     private suspend fun getUserData(uid: String) {
         try {
             val result = FirestoreHelper.getUser(uid)
@@ -47,6 +54,15 @@ class ProfileViewModel : ViewModel(), AnkoLogger {
             mPosts.postValue(result)
         } catch (e: Exception) {
             error { "GetPostsData failed: $e" }
+        }
+    }
+
+    private suspend fun sendFriendshipRequestData(from: String, to: String): Boolean {
+        return try {
+            FirestoreHelper.sendFriendshipRequest(from, to)
+        } catch (e: Exception) {
+            error { "SendFriendshipRequestData failed: $e" }
+            false
         }
     }
 }

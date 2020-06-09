@@ -23,4 +23,6 @@ data class User(
     constructor() : this("", "", "")
 
     fun getFullName() = "${firstName.trim()} ${lastName.trim()}"
+
+    fun isFriendWith(uid: String) = this.friends.contains(uid)
 }

@@ -129,4 +129,22 @@ object FirestoreHelper : AnkoLogger {
             emptyList()
         }
     }
+
+    suspend fun sendFriendshipRequest(from: String, to: String): Boolean {
+        return try {
+            val user = getUser(to)
+            val newPendingRequests = user.pendingFriendRequests.toMutableList().apply {
+                add(from)
+            }
+
+            users.document(to)
+                .update("pendingFriendRequests", newPendingRequests)
+                .await()
+
+            true
+        } catch (e: Exception) {
+            error { "SendFriendshipRequest failed: $e" }
+            false
+        }
+    }
 }

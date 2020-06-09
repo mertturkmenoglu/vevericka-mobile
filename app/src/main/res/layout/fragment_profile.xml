@@ -37,9 +37,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:elevation="@dimen/profile_card_view_elevation"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@id/vertical_end_guideline"
             app:layout_constraintStart_toStartOf="@id/vertical_guideline"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline">
+            app:layout_constraintTop_toBottomOf="@id/profileActionFab">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -111,16 +112,6 @@
                     app:layout_constraintTop_toBottomOf="@id/profileUserLocation"
                     tools:text="@string/profile_user_website" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/profileEditProfileButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_profile"
-                    app:icon="@drawable/ic_round_edit_white_24p"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profileFriendsButton" />
-
                 <Button
                     android:id="@+id/profileFriendsButton"
                     android:layout_width="wrap_content"
@@ -149,6 +140,17 @@
             app:layout_constraintStart_toStartOf="@id/vertical_guideline"
             app:layout_constraintTop_toBottomOf="@id/profileCardView"
             tools:listitem="@layout/item_home_post" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/profileActionFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_end_guideline"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toTopOf="@id/horizontal_guideline"
+            tools:icon="@drawable/ic_round_edit_white_24p"
+            tools:layout_editor_absoluteY="547dp"
+            tools:text="@string/edit_profile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

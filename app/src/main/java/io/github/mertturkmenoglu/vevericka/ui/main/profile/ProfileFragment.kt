@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -20,6 +21,8 @@ import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import io.github.mertturkmenoglu.vevericka.util.StorageHelper
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.design.snackbar
 
 class ProfileFragment : Fragment() {
@@ -62,12 +65,41 @@ class ProfileFragment : Fragment() {
             it.snackbar(getString(R.string.profile_friends))
         }
 
-        if (uid != FirebaseAuthHelper.getCurrentUserId()) {
-            profileEditProfileButton.isClickable = false
-            profileEditProfileButton.visibility = GONE
+        val currentUid = FirebaseAuthHelper.getCurrentUserId()
+        if (uid != currentUid) {
+            if (user.isFriendWith(currentUid)) {
+                setActionFabToGone()
+            } else {
+                setActionFabToFriend(currentUid, uid)
+            }
+        } else {
+            setActionFabToCurrent(uid)
         }
+    }
 
-        profileEditProfileButton.setOnClickListener {
+    private fun setActionFabToGone() {
+        profileActionFab.isClickable = false
+        profileActionFab.visibility = GONE
+    }
+
+    private fun setActionFabToFriend(currentUid: String, otherUid: String) {
+        profileActionFab.isClickable = true
+        profileActionFab.visibility = VISIBLE
+        profileActionFab.text = getString(R.string.friends_add_friend)
+        profileActionFab.setIconResource(R.drawable.ic_round_add_white_24dp)
+        profileActionFab.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                sendFriendshipRequest(currentUid, otherUid)
+            }
+        }
+    }
+
+    private fun setActionFabToCurrent(uid: String) {
+        profileActionFab.isClickable = true
+        profileActionFab.visibility = VISIBLE
+        profileActionFab.text = getString(R.string.edit_profile)
+        profileActionFab.setIconResource(R.drawable.ic_round_edit_white_24p)
+        profileActionFab.setOnClickListener {
             editProfile(uid)
         }
     }
@@ -84,6 +116,10 @@ class ProfileFragment : Fragment() {
 
     private fun editProfile(uid: String) {
 
+    }
+
+    private suspend fun sendFriendshipRequest(from: String, to: String) {
+        profileViewModel.sendFriendshipRequest(from, to)
     }
 
     private fun getPosts(uid: String) {
