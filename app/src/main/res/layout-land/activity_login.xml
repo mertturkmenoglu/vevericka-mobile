@@ -73,9 +73,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginEmailTextInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        app:boxStrokeColor="@color/colorAppRed"
         app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
         app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
@@ -91,9 +93,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginPasswordTextInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        app:boxStrokeColor="@color/colorAppRed"
         app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
         app:layout_constraintStart_toEndOf="@id/vertical_mid_guideline"
