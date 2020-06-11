@@ -26,7 +26,7 @@ import java.io.ByteArrayOutputStream
 
 
 class RegisterActivity : AppCompatActivity(), AnkoLogger {
-    companion object {
+    private companion object {
         private const val RC_SELECT_IMAGE = 1
         private const val KEY_FIRST_NAME = "first_name"
         private const val KEY_LAST_NAME = "last_name"
@@ -79,7 +79,7 @@ class RegisterActivity : AppCompatActivity(), AnkoLogger {
         val email = mEmailEditText.text?.toString()?.trim() ?: return
         val password = mPasswordEditText.text?.toString()?.trim() ?: return
 
-        if (listOf(firstName, lastName, email, password).any { it.isBlank() }) {
+        if (listOf(firstName, lastName, email, password).any(String::isBlank)) {
             view.snackbar(getString(R.string.fill_empty_fields))
             return
         }
@@ -149,7 +149,7 @@ class RegisterActivity : AppCompatActivity(), AnkoLogger {
 
     private fun updateImageUrl(uid: String) {
         verbose("Image Url updating")
-        FirestoreHelper.updateImageUrl(uid, uid).addOnSuccessListener {
+        FirestoreHelper.updateImageUrl(uid = uid, newPath = uid).addOnSuccessListener {
             startActivity(intentFor<MainActivity>().clearTask().newTask())
         }
     }
