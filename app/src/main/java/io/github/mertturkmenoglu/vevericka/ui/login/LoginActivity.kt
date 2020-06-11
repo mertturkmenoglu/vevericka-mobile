@@ -14,7 +14,7 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.design.snackbar
 
 class LoginActivity : AppCompatActivity(), AnkoLogger {
-    companion object {
+    private companion object {
         private const val KEY_EMAIL = "email"
         private const val KEY_PASSWORD = "password"
     }
@@ -30,8 +30,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
         mPasswordEditText = loginPasswordTextInput.editText ?: throw IllegalStateException()
 
         loginLoginButton.setOnClickListener { onLoginClick(it) }
-        loginHelpButton.setOnClickListener { helpDialog() }
-        loginHelpText.setOnClickListener { helpDialog() }
+        loginHelpFab.setOnClickListener { helpDialog() }
     }
 
     private fun onLoginClick(view: View) {
@@ -39,8 +38,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
         val password = mPasswordEditText.text?.toString()?.trim() ?: return
 
         if (listOf(email, password).any { it.isBlank() }) {
-            val text = getString(R.string.login_empty_field)
-            view.snackbar(text)
+            view.snackbar(getString(R.string.login_empty_field))
             return
         }
 
@@ -53,7 +51,7 @@ class LoginActivity : AppCompatActivity(), AnkoLogger {
                 startActivity(intentFor<MainActivity>().newTask().clearTask())
             } else {
                 val message = it.exception?.localizedMessage ?: getString(R.string.login_err_msg)
-                error("Sign-in failure: ", it.exception)
+                error { "Sign-in failure: ${it.exception}" }
                 view.snackbar(message)
             }
         }
