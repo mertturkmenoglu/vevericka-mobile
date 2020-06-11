@@ -15,7 +15,7 @@ import org.jetbrains.anko.design.snackbar
 
 
 class PasswordResetActivity : AppCompatActivity(), AnkoLogger {
-    companion object {
+    private companion object {
         private const val KEY_EMAIL = "email"
         private const val INTENT_DELAY_MILLIS = 1000L
     }
@@ -28,15 +28,14 @@ class PasswordResetActivity : AppCompatActivity(), AnkoLogger {
 
         mEmailEditText = passwordResetEmailTextInput.editText ?: throw IllegalStateException()
 
-        passwordResetSendButton.setOnClickListener { onResetButtonClick(it) }
+        passwordResetSendButton.setOnClickListener(::onResetButtonClick)
     }
 
     private fun onResetButtonClick(view: View) {
         val email = mEmailEditText.text?.toString()?.trim() ?: return
 
         if (email.isBlank()) {
-            val text = getString(R.string.fill_empty_fields)
-            view.snackbar(text)
+            view.snackbar(getString(R.string.fill_empty_fields))
             return
         }
 
