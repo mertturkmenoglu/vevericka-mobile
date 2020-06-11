@@ -59,12 +59,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginEmailTextInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:errorEnabled="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxStrokeColor="@color/colorAppRed"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@id/loginAppName">
@@ -79,10 +79,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginPasswordTextInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:boxStrokeColor="@color/colorAppRed"
         app:errorEnabled="true"
         app:layout_constraintEnd_toStartOf="@id/vertical_end_guideline"
@@ -111,30 +111,17 @@
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@id/loginPasswordTextInput" />
 
-    <ImageView
-        android:id="@+id/loginHelpButton"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/login_help"
-        android:src="@drawable/ic_outline_help_outline_red_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/loginHelpText"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@id/loginLoginButton" />
-
-    <TextView
-        android:id="@+id/loginHelpText"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/loginHelpFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:backgroundTint="@color/colorAppRed"
         android:text="@string/login_help_text"
-        android:textColor="@color/colorAppRed"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/loginHelpButton"
+        app:icon="@drawable/ic_outline_help_outline_red_24dp"
+        app:iconTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/vertical_end_guideline"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/loginHelpButton"
-        app:layout_constraintTop_toTopOf="@id/loginHelpButton" />
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/loginLoginButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
