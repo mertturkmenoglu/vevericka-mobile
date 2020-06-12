@@ -3,7 +3,11 @@ package io.github.mertturkmenoglu.vevericka.interfaces
 import io.github.mertturkmenoglu.vevericka.data.model.User
 
 interface FriendshipRequestListener {
-    fun onApprove(user: User)
+    interface OnApproveListener {
+        fun onApprove(user: User)
+    }
 
-    fun onDismiss(user: User)
+    interface OnDismissListener {
+        fun onDismiss(user: User)
+    }
 }

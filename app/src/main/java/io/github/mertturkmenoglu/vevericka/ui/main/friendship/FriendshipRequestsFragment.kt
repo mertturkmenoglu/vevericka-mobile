@@ -9,14 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.mertturkmenoglu.vevericka.R
-import io.github.mertturkmenoglu.vevericka.data.model.User
-import io.github.mertturkmenoglu.vevericka.interfaces.FriendshipRequestListener
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
 import kotlinx.android.synthetic.main.fragment_friendship_requests.view.*
 import org.jetbrains.anko.design.snackbar
 
 class FriendshipRequestsFragment : Fragment() {
-    private lateinit var friendshipRequestsViewModel: FriendshipRequestsViewModel
+    private lateinit var viewModel: FriendshipRequestsViewModel
     private lateinit var mRoot: View
     private lateinit var mAdapter: FriendshipRequestAdapter
 
@@ -25,8 +23,7 @@ class FriendshipRequestsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        friendshipRequestsViewModel = ViewModelProvider(this)
-            .get(FriendshipRequestsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FriendshipRequestsViewModel::class.java)
         mRoot = inflater.inflate(R.layout.fragment_friendship_requests, container, false)
 
         initRecyclerView()
@@ -40,34 +37,27 @@ class FriendshipRequestsFragment : Fragment() {
     private fun initRecyclerView() {
         val ctx = activity?.applicationContext ?: throw IllegalStateException()
         mRoot.friendshipRequestsRecyclerView.layoutManager = LinearLayoutManager(ctx)
-        mAdapter = FriendshipRequestAdapter(ctx)
+        mAdapter = FriendshipRequestAdapter()
         mRoot.friendshipRequestsRecyclerView.adapter = mAdapter
-        mAdapter.setRequestListener(object : FriendshipRequestListener {
-            override fun onApprove(user: User) {
-                friendshipRequestsViewModel.approveFriendshipRequest(
-                    thisUser = FirebaseAuthHelper.getCurrentUserId(),
-                    otherUser = user.imageUrl
-                )
-                mRoot.snackbar("Friendship request approved")
-            }
 
-            override fun onDismiss(user: User) {
-                friendshipRequestsViewModel.dismissFriendshipRequest(
-                    thisUser = FirebaseAuthHelper.getCurrentUserId(),
-                    otherUser = user.imageUrl
-                )
-                mRoot.snackbar("Friendship request dismissed")
-            }
-        })
+        mAdapter.setOnApproveListener {
+            viewModel.approveFriendshipRequest(FirebaseAuthHelper.getCurrentUserId(), it.imageUrl)
+            mRoot.snackbar("Friendship request approved")
+        }
+
+        mAdapter.setOnDismissListener {
+            viewModel.dismissFriendshipRequest(FirebaseAuthHelper.getCurrentUserId(), it.imageUrl)
+            mRoot.snackbar("Friendship request dismissed")
+        }
     }
 
     private fun getFriendshipRequests() {
         mRoot.friendshipRequestsSwipeRefreshLayout.isRefreshing = true
         val uid = FirebaseAuthHelper.getCurrentUserId()
-        friendshipRequestsViewModel.getFriendshipRequests(uid)
-            .observe(viewLifecycleOwner, Observer {
-                mAdapter.submitList(it)
-                mRoot.friendshipRequestsSwipeRefreshLayout.isRefreshing = false
-            })
+
+        viewModel.getFriendshipRequests(uid).observe(viewLifecycleOwner, Observer {
+            mAdapter.submitList(it)
+            mRoot.friendshipRequestsSwipeRefreshLayout.isRefreshing = false
+        })
     }
 }

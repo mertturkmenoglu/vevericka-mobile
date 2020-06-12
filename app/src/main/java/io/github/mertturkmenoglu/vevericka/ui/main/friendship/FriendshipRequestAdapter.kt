@@ -1,6 +1,5 @@
 package io.github.mertturkmenoglu.vevericka.ui.main.friendship
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,20 +7,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.button.MaterialButton
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.data.model.User
 import io.github.mertturkmenoglu.vevericka.interfaces.FriendshipRequestListener
+import io.github.mertturkmenoglu.vevericka.ui.main.friendship.FriendshipRequestAdapter.FriendshipRequestViewHolder
 import io.github.mertturkmenoglu.vevericka.util.StorageHelper
 import io.github.mertturkmenoglu.vevericka.util.UserDiffCallback
+import io.github.mertturkmenoglu.vevericka.util.loadCircleImage
 import kotlinx.android.synthetic.main.item_friendship_request.view.*
 
-class FriendshipRequestAdapter(private val context: Context) :
-    ListAdapter<User, FriendshipRequestAdapter.FriendshipRequestViewHolder>(UserDiffCallback.callback) {
+class FriendshipRequestAdapter :
+    ListAdapter<User, FriendshipRequestViewHolder>(UserDiffCallback.callback) {
 
-    private lateinit var reqListener: FriendshipRequestListener
+    private lateinit var approveListener: FriendshipRequestListener.OnApproveListener
+    private lateinit var dismissListener: FriendshipRequestListener.OnDismissListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendshipRequestViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -31,43 +31,52 @@ class FriendshipRequestAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: FriendshipRequestViewHolder, position: Int) {
         val user = getItem(position)
+        holder.bind(user)
+    }
 
-        with(holder) {
-            fullName.text = user.getFullName()
-
-            StorageHelper.getPictureDownloadUrl(user.imageUrl).addOnSuccessListener { uri ->
-                Glide.with(context)
-                    .load(uri)
-                    .apply(RequestOptions().circleCrop())
-                    .into(profilePicture)
+    fun setOnApproveListener(action: (user: User) -> Unit) {
+        this.approveListener = object : FriendshipRequestListener.OnApproveListener {
+            override fun onApprove(user: User) {
+                action(user)
             }
         }
     }
 
-    fun setRequestListener(listener: FriendshipRequestListener) {
-        this.reqListener = listener
+    fun setOnDismissListener(action: (user: User) -> Unit) {
+        this.dismissListener = object : FriendshipRequestListener.OnDismissListener {
+            override fun onDismiss(user: User) {
+                action(user)
+            }
+        }
     }
 
     inner class FriendshipRequestViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val profilePicture: ImageView = view.friendshipRequestItemProfileImage
-        val fullName: TextView = view.friendshipRequestItemFullName
-        val approveBtn: MaterialButton = view.friendshipRequestItemApproveButton
-        val dismissBtn: MaterialButton = view.friendshipRequestItemDismissButton
+        private val profilePicture: ImageView = view.friendshipRequestItemProfileImage
+        private val fullName: TextView = view.friendshipRequestItemFullName
+        private val approveBtn: MaterialButton = view.friendshipRequestItemApproveButton
+        private val dismissBtn: MaterialButton = view.friendshipRequestItemDismissButton
 
         init {
             approveBtn.setOnClickListener {
-                val isInitialized = this@FriendshipRequestAdapter::reqListener.isInitialized
+                val isInitialized = this@FriendshipRequestAdapter::approveListener.isInitialized
                 if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
-                    reqListener.onApprove(getItem(adapterPosition))
+                    approveListener.onApprove(getItem(adapterPosition))
                 }
             }
 
             dismissBtn.setOnClickListener {
-                val isInitialized = this@FriendshipRequestAdapter::reqListener.isInitialized
+                val isInitialized = this@FriendshipRequestAdapter::dismissListener.isInitialized
                 if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
-                    reqListener.onDismiss(getItem(adapterPosition))
+                    dismissListener.onDismiss(getItem(adapterPosition))
                 }
             }
+        }
+
+        fun bind(user: User) {
+            fullName.text = user.getFullName()
+
+            StorageHelper.getPictureDownloadUrl(user.imageUrl)
+                .addOnSuccessListener { profilePicture.loadCircleImage(it) }
         }
     }
 }
