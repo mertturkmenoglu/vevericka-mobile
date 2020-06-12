@@ -14,21 +14,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import io.github.mertturkmenoglu.vevericka.R
-import io.github.mertturkmenoglu.vevericka.data.model.Post
 import io.github.mertturkmenoglu.vevericka.data.model.User
-import io.github.mertturkmenoglu.vevericka.interfaces.PostClickListener
 import io.github.mertturkmenoglu.vevericka.ui.main.home.HomeFragment
 import io.github.mertturkmenoglu.vevericka.ui.main.home.posts.PostAdapter
-import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
-import io.github.mertturkmenoglu.vevericka.util.StorageHelper
+import io.github.mertturkmenoglu.vevericka.util.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.jetbrains.anko.design.snackbar
 
 class ProfileFragment : Fragment() {
@@ -36,28 +32,30 @@ class ProfileFragment : Fragment() {
         const val KEY_PROFILE_UID = "uid"
     }
 
-    private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var viewModel: ProfileViewModel
     private lateinit var mRoot: View
     private lateinit var mAdapter: PostAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         mRoot = inflater.inflate(R.layout.fragment_profile, container, false)
         initRecyclerView()
 
-        val uid = arguments?.getString(KEY_PROFILE_UID) ?: FirebaseAuthHelper.getCurrentUserId()
-        profileViewModel.getUser(uid).observe(viewLifecycleOwner, Observer {
+        val uid = getUidFromArguments(arguments)
+        viewModel.getUser(uid).observe(viewLifecycleOwner, Observer {
             initViews(uid, it)
         })
 
         getPosts(uid)
 
         return mRoot
+    }
+
+    private fun getUidFromArguments(arguments: Bundle?): String {
+        return arguments?.getString(KEY_PROFILE_UID) ?: FirebaseAuthHelper.getCurrentUserId()
     }
 
     private fun initViews(uid: String, user: User) {
@@ -71,43 +69,50 @@ class ProfileFragment : Fragment() {
             it.snackbar(getString(R.string.profile_friends))
         }
 
+        setActionFab(uid, user)
+    }
+
+    private fun setActionFab(uid: String, user: User) {
         val currentUid = FirebaseAuthHelper.getCurrentUserId()
-        if (uid != currentUid) {
-            if (user.isFriendWith(currentUid)) {
-                setActionFabToGone()
-            } else {
-                setActionFabToFriend(currentUid, uid)
-            }
-        } else {
+        if (uid == currentUid) {
             setActionFabToCurrent(uid)
+            return
+        }
+
+        if (user.isFriendWith(currentUid)) {
+            setActionFabToGone()
+        } else {
+            setActionFabToFriend(currentUid, uid)
         }
     }
 
     private fun setActionFabToGone() {
-        profileActionFab.isClickable = false
-        profileActionFab.visibility = GONE
+        profileActionFab.makeNonClickable()
+        profileActionFab.makeGone()
     }
 
     private fun setActionFabToFriend(currentUid: String, otherUid: String) {
-        profileActionFab.isClickable = true
-        profileActionFab.visibility = VISIBLE
-        profileActionFab.text = getString(R.string.friends_add_friend)
-        profileActionFab.setIconResource(R.drawable.ic_round_add_white_24dp)
-        profileActionFab.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                sendFriendshipRequest(currentUid, otherUid)
+        with(profileActionFab) {
+            makeClickable()
+            makeVisible()
+
+            text = getString(R.string.friends_add_friend)
+            setIconResource(R.drawable.ic_round_add_white_24dp)
+
+            setOnClickListener {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    sendFriendshipRequest(currentUid, otherUid)
+                }
             }
         }
     }
 
-    private fun setActionFabToCurrent(uid: String) {
-        profileActionFab.isClickable = true
-        profileActionFab.visibility = VISIBLE
-        profileActionFab.text = getString(R.string.edit_profile)
-        profileActionFab.setIconResource(R.drawable.ic_round_edit_white_24p)
-        profileActionFab.setOnClickListener {
-            editProfile(uid)
-        }
+    private fun setActionFabToCurrent(uid: String) = with(profileActionFab) {
+        makeClickable()
+        makeVisible()
+        text = getString(R.string.edit_profile)
+        setIconResource(R.drawable.ic_round_edit_white_24p)
+        setOnClickListener { editProfile(uid) }
     }
 
     private fun initRecyclerView() {
@@ -115,23 +120,22 @@ class ProfileFragment : Fragment() {
         mRoot.profileRecyclerView.layoutManager = LinearLayoutManager(ctx)
         mAdapter = PostAdapter(ctx)
         mRoot.profileRecyclerView.adapter = mAdapter
-        mAdapter.setPostClickListener(object : PostClickListener {
-            override fun onCommentClick(post: Post) {
-                val args = bundleOf(HomeFragment.KEY_POST to Gson().toJson(post))
-                val action = R.id.action_navigation_profile_to_navigation_post_detail
-                findNavController().navigate(action, args)
-            }
 
-            override fun onFavClick(post: Post) {
-                Toast.makeText(ctx, post.content, Toast.LENGTH_SHORT).show()
-            }
+        mAdapter.setOnCommentClickListener { post ->
+            val args = bundleOf(HomeFragment.KEY_POST to Gson().toJson(post))
+            val action = R.id.action_navigation_profile_to_navigation_post_detail
+            findNavController().navigate(action, args)
+        }
 
-            override fun onPersonClick(post: Post) {
-                val args = bundleOf(KEY_PROFILE_UID to post.uid)
-                val action = R.id.action_navigation_profile_self
-                findNavController().navigate(action, args)
-            }
-        })
+        mAdapter.setOnFavClickListener { post ->
+            Toast.makeText(ctx, post.content, Toast.LENGTH_SHORT).show()
+        }
+
+        mAdapter.setOnPersonClickListener { post ->
+            val args = bundleOf(KEY_PROFILE_UID to post.uid)
+            val action = R.id.action_navigation_profile_self
+            findNavController().navigate(action, args)
+        }
     }
 
     private fun editProfile(uid: String) {
@@ -139,25 +143,22 @@ class ProfileFragment : Fragment() {
     }
 
     private suspend fun sendFriendshipRequest(from: String, to: String) {
-        profileViewModel.sendFriendshipRequest(from, to)
+        viewModel.sendFriendshipRequest(from, to)
     }
 
     private fun getPosts(uid: String) {
-        profileViewModel.getPosts(uid).observe(viewLifecycleOwner, Observer {
+        viewModel.getPosts(uid).observe(viewLifecycleOwner, Observer {
             mAdapter.submitList(it)
         })
     }
 
     private fun loadProfileImage(uid: String) {
-        StorageHelper.getPictureDownloadUrl(uid).addOnSuccessListener {
-            val imageWidth = resources.getDimension(R.dimen.profile_profile_image_width).toInt()
-            val imageHeight = resources.getDimension(R.dimen.profile_profile_image_height).toInt()
+        val imageWidth = resources.getDimension(R.dimen.profile_profile_image_width).toInt()
+        val imageHeight = resources.getDimension(R.dimen.profile_profile_image_height).toInt()
 
-            Glide.with(this)
-                .load(it)
-                .override(imageWidth, imageHeight)
-                .apply(RequestOptions().circleCrop())
-                .into(profileProfileImage)
+        lifecycleScope.launch(Dispatchers.IO) {
+            val uri = StorageHelper.getPictureDownloadUrl(uid).await()
+            profileProfileImage.loadCircleImage(uri, imageWidth, imageHeight)
         }
     }
 

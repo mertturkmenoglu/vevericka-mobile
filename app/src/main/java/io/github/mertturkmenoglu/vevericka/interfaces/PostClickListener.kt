@@ -3,9 +3,15 @@ package io.github.mertturkmenoglu.vevericka.interfaces
 import io.github.mertturkmenoglu.vevericka.data.model.Post
 
 interface PostClickListener {
-    fun onCommentClick(post: Post)
+    interface OnCommentClickListener {
+        fun onCommentClick(post: Post)
+    }
 
-    fun onFavClick(post: Post)
+    interface OnFavClickListener {
+        fun onFavClick(post: Post)
+    }
 
-    fun onPersonClick(post: Post)
+    interface OnPersonClickListener {
+        fun onPersonClick(post: Post)
+    }
 }

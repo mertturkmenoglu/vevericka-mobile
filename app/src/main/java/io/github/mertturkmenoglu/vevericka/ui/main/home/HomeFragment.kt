@@ -13,12 +13,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import io.github.mertturkmenoglu.vevericka.R
-import io.github.mertturkmenoglu.vevericka.data.model.Post
-import io.github.mertturkmenoglu.vevericka.interfaces.PostClickListener
 import io.github.mertturkmenoglu.vevericka.ui.main.home.posts.NewPostActivity
 import io.github.mertturkmenoglu.vevericka.ui.main.home.posts.PostAdapter
 import io.github.mertturkmenoglu.vevericka.ui.main.profile.ProfileFragment
 import io.github.mertturkmenoglu.vevericka.util.FirebaseAuthHelper
+import io.github.mertturkmenoglu.vevericka.util.makeInvisible
+import io.github.mertturkmenoglu.vevericka.util.makeVisible
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.support.v4.startActivity
 
@@ -27,18 +27,17 @@ class HomeFragment : Fragment() {
         const val KEY_POST = "post"
     }
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var viewModel: HomeViewModel
     private lateinit var root: View
     private lateinit var mAdapter: PostAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         root = inflater.inflate(R.layout.fragment_home, container, false)
-        root.homeNewPostFab.visibility = View.INVISIBLE
+        root.homeNewPostFab.makeInvisible()
 
         initRecyclerView()
         getPosts()
@@ -56,32 +55,35 @@ class HomeFragment : Fragment() {
         root.homePostsRecyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
         mAdapter = PostAdapter(context ?: throw IllegalStateException())
         root.homePostsRecyclerView.adapter = mAdapter
-        mAdapter.setPostClickListener(object : PostClickListener {
-            override fun onCommentClick(post: Post) {
-                val args = bundleOf(KEY_POST to Gson().toJson(post))
-                val action = R.id.action_navigation_home_to_navigation_post_detail
-                findNavController().navigate(action, args)
-            }
 
-            override fun onFavClick(post: Post) {
-                Toast.makeText(this@HomeFragment.context, post.content, Toast.LENGTH_SHORT).show()
-            }
+        setAdapterClickListeners()
+    }
 
-            override fun onPersonClick(post: Post) {
-                val args = bundleOf(ProfileFragment.KEY_PROFILE_UID to post.uid)
-                val action = R.id.action_navigation_home_to_navigation_profile
-                findNavController().navigate(action, args)
-            }
-        })
+    private fun setAdapterClickListeners() {
+        mAdapter.setOnCommentClickListener { post ->
+            val args = bundleOf(KEY_POST to Gson().toJson(post))
+            val action = R.id.action_navigation_home_to_navigation_post_detail
+            findNavController().navigate(action, args)
+        }
+
+        mAdapter.setOnFavClickListener { post ->
+            Toast.makeText(this@HomeFragment.context, post.content, Toast.LENGTH_SHORT).show()
+        }
+
+        mAdapter.setOnPersonClickListener { post ->
+            val args = bundleOf(ProfileFragment.KEY_PROFILE_UID to post.uid)
+            val action = R.id.action_navigation_home_to_navigation_profile
+            findNavController().navigate(action, args)
+        }
     }
 
     private fun getPosts() {
         root.homeSwipeRefreshLayout.isRefreshing = true
         val uid = FirebaseAuthHelper.getCurrentUserId()
-        homeViewModel.getPosts(uid).observe(viewLifecycleOwner, Observer {
+        viewModel.getPosts(uid).observe(viewLifecycleOwner, Observer {
             mAdapter.submitList(it)
             root.homeSwipeRefreshLayout.isRefreshing = false
-            root.homeNewPostFab.visibility = View.VISIBLE
+            root.homeNewPostFab.makeVisible()
         })
     }
 }
