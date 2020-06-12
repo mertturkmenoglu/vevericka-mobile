@@ -15,3 +15,11 @@ fun ImageView.loadCircleImage(url: String) {
 fun ImageView.loadCircleImage(uri: Uri) {
     Glide.with(this.context).load(uri).apply(RequestOptions().circleCrop()).into(this)
 }
+
+fun ImageView.loadImage(url: String) {
+    Glide.with(this.context).load(url).into(this)
+}
+
+fun ImageView.loadImage(uri: Uri) {
+    Glide.with(this.context).load(uri).into(this)
+}

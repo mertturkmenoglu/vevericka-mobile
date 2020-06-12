@@ -7,35 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.firestore.ktx.toObject
 import io.github.mertturkmenoglu.vevericka.R
 import io.github.mertturkmenoglu.vevericka.data.model.Post
 import io.github.mertturkmenoglu.vevericka.data.model.User
 import io.github.mertturkmenoglu.vevericka.interfaces.PostClickListener
-import io.github.mertturkmenoglu.vevericka.util.FirestoreHelper
-import io.github.mertturkmenoglu.vevericka.util.StorageHelper
+import io.github.mertturkmenoglu.vevericka.util.*
 import kotlinx.android.synthetic.main.item_home_post.view.*
 
 class PostAdapter(private val context: Context) :
-    ListAdapter<Post, PostAdapter.PostViewHolder>(
-        DIFF_CALLBACK
-    ) {
-    private companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Post>() {
-            override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem.imageUrl == newItem.imageUrl
-            }
-
-            override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem == newItem
-            }
-        }
-    }
+    ListAdapter<Post, PostAdapter.PostViewHolder>(PostDiffCallback.callback) {
 
     private lateinit var listener: PostClickListener
 
@@ -47,28 +30,7 @@ class PostAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = getItem(position)
-        val favCount = String.format(context.getString(R.string.post_item_likes), post.likeCount)
-        val comment =
-            String.format(context.getString(R.string.post_item_comments), post.comments.size)
-        holder.content.text = post.content
-        holder.favorites.text = favCount
-        holder.comments.text = comment
-
-        FirestoreHelper.getUserAsTask(post.uid).addOnSuccessListener {
-            val user = it.toObject<User>()
-            holder.fullName.text = user?.getFullName()
-
-            Glide.with(context)
-                .load(post.imageUrl)
-                .into(holder.image)
-
-            StorageHelper.getPictureDownloadUrl(post.uid).addOnSuccessListener { uri ->
-                Glide.with(context)
-                    .load(uri)
-                    .apply(RequestOptions().circleCrop())
-                    .into(holder.profilePicture)
-            }
-        }
+        holder.bind(post)
     }
 
     fun setPostClickListener(listener: PostClickListener) {
@@ -76,16 +38,44 @@ class PostAdapter(private val context: Context) :
     }
 
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val profilePicture: ImageView = view.postItemProfilePicture
-        val content: TextView = view.postItemContent
-        val fullName: TextView = view.postItemUserFullName
-        val image: ImageView = view.postItemImage
-        val favorites: TextView = view.postItemFavCount
-        val comments: TextView = view.postItemCommentsCount
+        private val profilePicture: ImageView = view.postItemProfilePicture
+        private val content: TextView = view.postItemContent
+        private val fullName: TextView = view.postItemUserFullName
+        private val image: ImageView = view.postItemImage
+        private val favorites: TextView = view.postItemFavCount
+        private val comments: TextView = view.postItemCommentsCount
         private val commentsIcon: ImageButton = view.postItemCommentsButton
         private val favIcon: ImageButton = view.postItemFavButton
 
         init {
+            setClickListeners()
+        }
+
+        fun bind(post: Post) {
+            val favText = context.getString(R.string.post_item_likes)
+            val commentText = context.getString(R.string.post_item_comments)
+
+            content.text = post.content
+            favorites.text = String.format(favText, post.likeCount)
+            comments.text = String.format(commentText, post.comments.size)
+
+            FirestoreHelper.getUserAsTask(post.uid).addOnSuccessListener {
+                val user = it.toObject<User>()
+                fullName.text = user?.getFullName()
+                image.loadImage(post.imageUrl)
+
+                StorageHelper.getPictureDownloadUrl(post.uid)
+                    .addOnSuccessListener { uri -> profilePicture.loadCircleImage(uri) }
+            }
+        }
+
+        private fun setClickListeners() {
+            setOnCommentClickListeners()
+            setOnPersonClickListeners()
+            setOnFavClickListeners()
+        }
+
+        private fun setOnCommentClickListeners() {
             comments.setOnClickListener {
                 val isInitialized = this@PostAdapter::listener.isInitialized
                 if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
@@ -99,7 +89,9 @@ class PostAdapter(private val context: Context) :
                     listener.onCommentClick(getItem(adapterPosition))
                 }
             }
+        }
 
+        private fun setOnPersonClickListeners() {
             profilePicture.setOnClickListener {
                 val isInitialized = this@PostAdapter::listener.isInitialized
                 if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
@@ -113,7 +105,9 @@ class PostAdapter(private val context: Context) :
                     listener.onPersonClick(getItem(adapterPosition))
                 }
             }
+        }
 
+        private fun setOnFavClickListeners() {
             favIcon.setOnClickListener {
                 val isInitialized = this@PostAdapter::listener.isInitialized
                 if (isInitialized && adapterPosition != RecyclerView.NO_POSITION) {
