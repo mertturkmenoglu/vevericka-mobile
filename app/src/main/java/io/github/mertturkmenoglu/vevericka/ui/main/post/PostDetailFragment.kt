@@ -57,10 +57,10 @@ class PostDetailFragment : Fragment() {
     private fun initRecyclerView() {
         val ctx = activity?.applicationContext ?: throw IllegalStateException()
         root.postDetailCommentsRecyclerView.layoutManager = LinearLayoutManager(ctx)
-        mAdapter = CommentAdapter(ctx)
+        mAdapter = CommentAdapter()
 
         root.postDetailCommentsRecyclerView.adapter = mAdapter
-        mAdapter.setPostClickListener {
+        mAdapter.setCommentClickListener {
             val args = bundleOf(ProfileFragment.KEY_PROFILE_UID to it)
             findNavController().navigate(
                 R.id.action_navigation_post_detail_to_navigation_profile,
