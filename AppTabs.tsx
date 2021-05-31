@@ -2,6 +2,10 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Home from "./screens/Home";
+import User from "./screens/User";
+import Search from "./screens/Search";
+import Notifications from "./screens/Notifications";
+import Messages from "./screens/Messages";
 
 interface AppTabsProps {}
 
@@ -10,7 +14,7 @@ export type AppParamList = {
   Search: undefined;
   Notifications: undefined;
   Messages: undefined;
-  Profile: undefined;
+  User: undefined;
 };
 
 const Tabs = createBottomTabNavigator<AppParamList>();
@@ -20,7 +24,7 @@ const mapTabsToIcons = {
   Search: "magnify" as const,
   Notifications: "bell-outline" as const,
   Messages: "email-outline" as const,
-  Profile: "account-circle-outline" as const,
+  User: "account-circle-outline" as const,
 };
 
 export const AppTabs: React.FC<AppTabsProps> = ({}) => {
@@ -41,10 +45,10 @@ export const AppTabs: React.FC<AppTabsProps> = ({}) => {
       }}
     >
       <Tabs.Screen name="Home" component={Home} />
-      <Tabs.Screen name="Search" component={Home} />
-      <Tabs.Screen name="Notifications" component={Home} />
-      <Tabs.Screen name="Messages" component={Home} />
-      <Tabs.Screen name="Profile" component={Home} />
+      <Tabs.Screen name="Search" component={Search} />
+      <Tabs.Screen name="Notifications" component={Notifications} />
+      <Tabs.Screen name="Messages" component={Messages} />
+      <Tabs.Screen name="User" component={User} />
     </Tabs.Navigator>
   );
 };
