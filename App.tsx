@@ -1,14 +1,17 @@
+import "react-native-gesture-handler";
 import * as React from "react";
-import { AppRegistry } from "react-native";
+import Routes from "./Routes";
 import { Provider as PaperProvider } from "react-native-paper";
-import Login from "./screens/Login";
+import { AuthProvider } from "./context/AuthContext";
 
-export default function Main() {
+const App = () => {
   return (
-    <PaperProvider>
-      <Login />
-    </PaperProvider>
+    <AuthProvider>
+      <PaperProvider>
+        <Routes />
+      </PaperProvider>
+    </AuthProvider>
   );
-}
+};
 
-AppRegistry.registerComponent("Vevericka", () => Main);
+export default App;

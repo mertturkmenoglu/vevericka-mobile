@@ -4,8 +4,11 @@ import { Snackbar } from "react-native-paper";
 import LoginActions from "../components/LoginActions";
 import LoginForm from "../components/LoginForm";
 import { primary } from "../constants/Colors";
+import { AuthNavProps } from "../AuthStack";
 
-export default function Login() {
+type Props = AuthNavProps<"Login">;
+
+export default function Login(props: Props) {
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   return (

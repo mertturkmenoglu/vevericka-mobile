@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-import AuthService from "../api/auth";
 import { primary } from "../constants/Colors";
+import { AuthContext } from "../context/AuthContext";
 
 interface Props {
-  setSnackbar: () => void,
+  setSnackbar: () => void;
 }
 
 const LoginForm = (props: Props) => {
+  const authContext = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const onLoginButtonPress = async () => {
     try {
-      const result = await AuthService.login(email, password);
-      console.log(result);
+      await authContext.login(email, password);
     } catch (e) {
       props.setSnackbar();
     }
@@ -32,7 +32,7 @@ const LoginForm = (props: Props) => {
         }}
         left={<TextInput.Icon name="email" color="#757575" />}
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={(text) => setEmail(text.trim())}
       />
       <TextInput
         label="Password"
@@ -49,7 +49,7 @@ const LoginForm = (props: Props) => {
             onPress={() => setIsPasswordHidden((prev) => !prev)}
           />
         }
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={(text) => setPassword(text.trim())}
       />
       <Button
         mode="text"
