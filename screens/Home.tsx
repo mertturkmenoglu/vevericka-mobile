@@ -1,24 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   Alert,
   FlatList,
   Image,
   Pressable,
   RefreshControl,
-  StatusBar,
   StyleSheet,
   Text,
-  View,
 } from "react-native";
-import { Card, Paragraph } from "react-native-paper";
+import { Card, FAB, Paragraph } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext";
 import Post from "../models/Post";
 import PostService from "../api/post";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { primary } from "../constants/Colors";
+import { HomeNavProps } from "../HomeStack";
 
-const Home = () => {
+type HomeProps = HomeNavProps<"Home">;
+
+const Home: React.FC<HomeProps> = ({ navigation }: HomeProps) => {
   const authContext = useContext(AuthContext);
   const [feed, setFeed] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,6 +109,19 @@ const Home = () => {
           </Card>
         )}
       />
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        color="#fff"
+        theme={{
+          colors: {
+            accent: primary,
+          },
+        }}
+        onPress={() => {
+          console.log("OnCreatePostPress");
+        }}
+      />
     </>
   );
 };
@@ -142,6 +155,12 @@ const styles = StyleSheet.create({
   },
   postDate: {
     alignSelf: "flex-start",
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });
 

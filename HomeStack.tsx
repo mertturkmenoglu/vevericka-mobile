@@ -13,6 +13,7 @@ interface HomeStackProps {}
 
 export type HomeParamList = {
   Home: undefined;
+  CreatePost: undefined;
 };
 
 export type HomeNavProps<T extends keyof HomeParamList> = {
