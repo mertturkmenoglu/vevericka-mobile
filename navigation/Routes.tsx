@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { AuthContext } from "./context/AuthContext";
-import { getUserFromStorage } from "./utils/UserStorageUtils";
+import { AuthContext } from "../context/AuthContext";
+import { getUserFromStorage } from "../utils/UserStorageUtils";
 import { ActivityIndicator, View } from "react-native";
 import { AuthStack } from "./AuthStack";
 import { AppTabs } from "./AppTabs";

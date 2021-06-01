@@ -3,9 +3,9 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
-import Home from "./screens/Home";
+import Home from "../screens/Home";
 import { RouteProp } from "@react-navigation/native";
-import { primary } from "./constants/Colors";
+import { primary } from "../constants/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Alert, Image, StyleSheet } from "react-native";
 
@@ -43,7 +43,7 @@ export const HomeStack: React.FC<HomeStackProps> = ({}) => {
           headerLeft: () => (
             <Image
               style={styles.appLogo}
-              source={require("./assets/icon-primary.png")}
+              source={require("../assets/icon-primary.png")}
               width={32}
               height={32}
             />

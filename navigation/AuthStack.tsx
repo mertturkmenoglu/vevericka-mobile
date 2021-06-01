@@ -3,7 +3,7 @@ import {
   createStackNavigator,
   StackNavigationProp,
 } from "@react-navigation/stack";
-import Login from "./screens/Login";
+import Login from "../screens/Login";
 import { RouteProp } from "@react-navigation/native";
 
 interface AuthStackProps {}

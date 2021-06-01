@@ -1,10 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import User from "./screens/User";
-import Search from "./screens/Search";
-import Notifications from "./screens/Notifications";
-import Messages from "./screens/Messages";
+import User from "../screens/User";
+import Search from "../screens/Search";
+import Notifications from "../screens/Notifications";
+import Messages from "../screens/Messages";
 import { HomeStack } from "./HomeStack";
 
 interface AppTabsProps {}

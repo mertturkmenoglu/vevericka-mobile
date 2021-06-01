@@ -14,7 +14,7 @@ import Post from "../models/Post";
 import PostService from "../api/post";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { primary } from "../constants/Colors";
-import { HomeNavProps } from "../HomeStack";
+import { HomeNavProps } from "../navigation/HomeStack";
 
 type HomeProps = HomeNavProps<"Home">;
 

@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import * as React from "react";
-import Routes from "./Routes";
+import Routes from "./navigation/Routes";
 import { Provider as PaperProvider } from "react-native-paper";
 import { AuthProvider } from "./context/AuthContext";
 import { primary } from "./constants/Colors";

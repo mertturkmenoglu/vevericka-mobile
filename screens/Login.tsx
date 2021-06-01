@@ -4,7 +4,7 @@ import { Snackbar } from "react-native-paper";
 import LoginActions from "../components/LoginActions";
 import LoginForm from "../components/LoginForm";
 import { primary } from "../constants/Colors";
-import { AuthNavProps } from "../AuthStack";
+import { AuthNavProps } from "../navigation/AuthStack";
 
 type Props = AuthNavProps<"Login">;
 
