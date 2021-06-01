@@ -16,7 +16,10 @@ const LoginForm = (props: Props) => {
 
   const onLoginButtonPress = async () => {
     try {
-      await authContext.login(email, password);
+      const user = await authContext.login(email, password);
+      if (user === null) {
+        props.setSnackbar();
+      }
     } catch (e) {
       props.setSnackbar();
     }
