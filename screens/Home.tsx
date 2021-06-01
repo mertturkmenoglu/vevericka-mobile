@@ -9,6 +9,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { AuthContext } from "../context/AuthContext";
@@ -52,10 +53,6 @@ const Home = () => {
       });
     }
   }, [fetchFeed, loading, setLoading]);
-
-  if (loading) {
-    return <ActivityIndicator size="large" />;
-  }
 
   return (
     <>
@@ -119,6 +116,18 @@ const Home = () => {
 const styles = StyleSheet.create({
   feed: {
     marginHorizontal: 10,
+  },
+  loadingIconContainer: {
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  loadingIcon: {
+    width: 48,
+    height: 48,
   },
   img: {
     width: 48,
