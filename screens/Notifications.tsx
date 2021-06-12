@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   FlatList,
   Image,
-  Pressable,
   RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
 } from "react-native";
@@ -22,7 +22,7 @@ const Notifications: React.FC<NotificationProps> = ({
   navigation,
 }: NotificationProps) => {
   const authContext = useContext(AuthContext);
-  const [notifications, setNotifications] = useState<Notification[]>();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -37,6 +37,20 @@ const Notifications: React.FC<NotificationProps> = ({
     } catch (e) {
       console.log(e);
       return [];
+    }
+  };
+
+  const deleteNotification = async (id: string) => {
+    try {
+      const notificationService = new NotificationService(
+        authContext.user?.token || ""
+      );
+      await notificationService.deleteNotification(id);
+      setNotifications((prevState) => {
+        return prevState?.filter((it) => it._id !== id);
+      });
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -71,6 +85,23 @@ const Notifications: React.FC<NotificationProps> = ({
     }
   }, [fetchNotifications, loading, setLoading]);
 
+  if (!loading && notifications.length === 0) {
+    return (
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={[primary]}
+          />
+        }
+      >
+        <Paragraph style={{ textAlign: "center" }}>No notifications</Paragraph>
+      </ScrollView>
+    );
+  }
+
   return (
     <>
       <FlatList
@@ -92,31 +123,31 @@ const Notifications: React.FC<NotificationProps> = ({
               console.log(item.origin.username);
             }}
           >
-            <Pressable onPress={() => console.log(JSON.stringify(item))}>
-              <Card.Title
-                title={item.origin.name}
-                subtitle={`@${item.origin.username}`}
-                left={() => (
-                  <Image
-                    style={styles.img}
-                    source={
-                      item.origin.image === "profile.png"
-                        ? require("../assets/profile.png")
-                        : { uri: item.origin.image }
-                    }
-                  />
-                )}
-                right={() => (
-                  <MaterialCommunityIcons
-                    style={styles.closeIcon}
-                    name="close"
-                    color={primary}
-                    size={24}
-                    onPress={() => console.log("pressed")}
-                  />
-                )}
-              />
-            </Pressable>
+            <Card.Title
+              title={item.origin.name}
+              subtitle={`@${item.origin.username}`}
+              left={() => (
+                <Image
+                  style={styles.img}
+                  source={
+                    item.origin.image === "profile.png"
+                      ? require("../assets/profile.png")
+                      : { uri: item.origin.image }
+                  }
+                />
+              )}
+              right={() => (
+                <MaterialCommunityIcons
+                  style={styles.closeIcon}
+                  name="close"
+                  color={primary}
+                  size={24}
+                  onPress={async () => {
+                    await deleteNotification(item._id);
+                  }}
+                />
+              )}
+            />
             <Card.Content>
               <Paragraph>{getNotificationText(item.type)}</Paragraph>
             </Card.Content>
@@ -135,14 +166,6 @@ const Notifications: React.FC<NotificationProps> = ({
 const styles = StyleSheet.create({
   feed: {
     marginHorizontal: 10,
-  },
-  loadingIconContainer: {
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
   },
   loadingIcon: {
     width: 48,
