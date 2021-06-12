@@ -1,11 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import User from "../screens/User";
 import Messages from "../screens/Messages";
 import { HomeStack } from "./HomeStack";
 import { NotificationStack } from "./NotificationStack";
 import { ExploreStack } from "./ExploreStack";
+import { UserStack } from "./UserStack";
 
 interface AppTabsProps {}
 
@@ -48,7 +48,7 @@ export const AppTabs: React.FC<AppTabsProps> = ({}) => {
       <Tabs.Screen name="Explore" component={ExploreStack} />
       <Tabs.Screen name="Notifications" component={NotificationStack} />
       <Tabs.Screen name="Messages" component={Messages} />
-      <Tabs.Screen name="User" component={User} />
+      <Tabs.Screen name="User" component={UserStack} />
     </Tabs.Navigator>
   );
 };
