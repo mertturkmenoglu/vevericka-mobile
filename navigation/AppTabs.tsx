@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import User from "../screens/User";
 import Search from "../screens/Search";
-import Notifications from "../screens/Notifications";
 import Messages from "../screens/Messages";
 import { HomeStack } from "./HomeStack";
+import { NotificationStack } from "./NotificationStack";
 
 interface AppTabsProps {}
 
@@ -46,7 +46,7 @@ export const AppTabs: React.FC<AppTabsProps> = ({}) => {
     >
       <Tabs.Screen name="Home" component={HomeStack} />
       <Tabs.Screen name="Explore" component={Search} />
-      <Tabs.Screen name="Notifications" component={Notifications} />
+      <Tabs.Screen name="Notifications" component={NotificationStack} />
       <Tabs.Screen name="Messages" component={Messages} />
       <Tabs.Screen name="User" component={User} />
     </Tabs.Navigator>
