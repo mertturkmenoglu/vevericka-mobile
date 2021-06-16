@@ -24,6 +24,10 @@ export const AuthStack: React.FC<AuthStackProps> = ({}) => {
     <Stack.Navigator
       screenOptions={{
         header: () => null,
+        cardShadowEnabled: false,
+        cardStyle: {
+          backgroundColor: "#fff",
+        },
       }}
     >
       <Stack.Screen name="Login" component={Login} />

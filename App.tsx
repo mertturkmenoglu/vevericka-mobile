@@ -10,7 +10,7 @@ const App = () => {
   return (
     <AuthProvider>
       <PaperProvider>
-        <StatusBar barStyle="light-content" backgroundColor={primary} />
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
         <Routes />
       </PaperProvider>
     </AuthProvider>

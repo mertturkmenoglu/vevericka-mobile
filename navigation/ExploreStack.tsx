@@ -39,6 +39,10 @@ export const ExploreStack: React.FC<ExploreStackProps> = ({}) => {
       <Stack.Screen
         options={{
           title: "Explore",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+          },
           headerLeft: () => (
             <MaterialCommunityIcons
               style={styles.ExploreIcon}

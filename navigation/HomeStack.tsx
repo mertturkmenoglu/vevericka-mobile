@@ -40,6 +40,10 @@ export const HomeStack: React.FC<HomeStackProps> = ({}) => {
       <Stack.Screen
         options={{
           title: "Vevericka",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+          },
           headerLeft: () => (
             <Image
               style={styles.appLogo}

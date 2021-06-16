@@ -49,6 +49,10 @@ export const UserStack: React.FC<UserStackProps> = ({}) => {
         initialParams={{ username: authContext.user?.username }}
         options={{
           title: authContext.user?.username,
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+          },
           headerLeft: () => (
             <MaterialCommunityIcons
               style={styles.accountIcon}

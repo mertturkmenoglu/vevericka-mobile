@@ -39,6 +39,10 @@ export const NotificationStack: React.FC<NotificationStackProps> = ({}) => {
       <Stack.Screen
         options={{
           title: "Notifications",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+          },
           headerLeft: () => (
             <MaterialCommunityIcons
               style={styles.notificationIcon}
